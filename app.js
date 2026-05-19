@@ -1,11 +1,68 @@
-const faucets = window.faucetsData;
+const faucets = window.faucetsData || [];
 
 const faucetList = document.getElementById('faucet-list');
 const faucetDetail = document.getElementById('faucet-detail');
 const hero = document.getElementById('hero');
-const navBtns = document.querySelectorAll('.nav-btn');
+const navLinks = document.querySelector('.nav-links');
+
+const TYPE_LABELS = {
+    all: 'Todas',
+    faucet: 'Faucets',
+    mining: 'Minería',
+    ptc: 'PTC',
+    rewards: 'Recompensas',
+    tasks: 'Tareas',
+    contests: 'Concursos',
+    investment: 'Inversión',
+    referral: 'Referidos',
+    autofaucet: 'AutoFaucet',
+    service: 'Servicios',
+    affiliate: 'Afiliados',
+    cloud_mining: 'Cloud Mining',
+    wallet: 'Wallet',
+    microwallet: 'MicroWallet'
+};
+
+function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>'"]/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+    }[char]));
+}
+
+function safeUrl(url) {
+    const raw = String(url ?? '').trim();
+    if (!raw || raw === '#' || raw.includes('TU_ID')) return '#';
+    if (/^https?:\/\//i.test(raw)) return raw;
+    return '#';
+}
+
+function stars(score) {
+    const safeScore = Number.isFinite(Number(score)) ? Number(score) : 0;
+    return '★'.repeat(Math.max(0, Math.floor(safeScore)));
+}
+
+function getAvailableTypes() {
+    return [...new Set(faucets.map(f => String(f.type || '').trim()).filter(Boolean))].sort();
+}
+
+function renderNavButtons() {
+    const availableTypes = getAvailableTypes();
+    const orderedTypes = ['all', ...availableTypes];
+
+    const filterButtonsHtml = orderedTypes.map((type, idx) => {
+        const label = TYPE_LABELS[type] || type.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        return `<button class="nav-btn ${idx === 0 ? 'active' : ''}" data-filter="${escapeHtml(type)}">${escapeHtml(label)}</button>`;
+    }).join('');
+
+    navLinks.innerHTML = `${filterButtonsHtml}<button class="nav-btn" id="blog-link">Blog</button>`;
+}
 
 function init() {
+    renderNavButtons();
     renderList(faucets);
     setupEventListeners();
 }
@@ -16,14 +73,14 @@ function renderList(data) {
         const card = document.createElement('div');
         card.className = 'faucet-card';
         card.innerHTML = `
-            <span class="card-tag">${faucet.type}</span>
-            <h3 class="card-title">${faucet.name}</h3>
+            <span class="card-tag">${escapeHtml(faucet.type)}</span>
+            <h3 class="card-title">${escapeHtml(faucet.name)}</h3>
             <div class="trust-badge">
-                <span class="rating-stars">${'★'.repeat(Math.floor(faucet.trustScore))}</span>
-                <span>${faucet.trustScore}</span>
+                <span class="rating-stars">${stars(faucet.trustScore)}</span>
+                <span>${escapeHtml(faucet.trustScore)}</span>
             </div>
-            <div class="card-bonus">${faucet.bonus}</div>
-            <p style="color: var(--text-dim); font-size: 0.9rem;">${faucet.summary.substring(0, 80)}...</p>
+            <div class="card-bonus">${escapeHtml(faucet.bonus)}</div>
+            <p style="color: var(--text-dim); font-size: 0.9rem;">${escapeHtml(String(faucet.summary || '').substring(0, 80))}...</p>
         `;
         card.onclick = () => showDetail(faucet);
         faucetList.appendChild(card);
@@ -35,44 +92,52 @@ function showDetail(faucet) {
     faucetList.classList.add('hidden');
     faucetDetail.classList.remove('hidden');
 
+    const cleanedReviews = Array.isArray(faucet.reviews) ? faucet.reviews : [];
+    const reviewsHtml = cleanedReviews.map(r => `
+        <div style="background: var(--bg-card); padding: 15px; border-radius: 10px; margin-top: 10px;">
+            <strong>${escapeHtml(r.user)}</strong> <span style="color: gold;">${stars(r.rating)}</span>
+            <p style="color: var(--text-dim);">${escapeHtml(r.text)}</p>
+        </div>
+    `).join('');
+
+    const referral = safeUrl(faucet.referralLink);
+    const scriptSnippet = faucet.script && faucet.script !== 'N/A'
+        ? `
+            <h4 style="margin-top: 20px;">Script / Código Útil:</h4>
+            <pre><code>${escapeHtml(faucet.script)}</code></pre>
+          `
+        : '';
+
     faucetDetail.innerHTML = `
         <button class="back-btn" id="back-to-list">← Volver al listado</button>
         <div class="detail-header">
             <div class="detail-info">
-                <span class="card-tag">${faucet.type}</span>
-                <h2>${faucet.name}</h2>
+                <span class="card-tag">${escapeHtml(faucet.type)}</span>
+                <h2>${escapeHtml(faucet.name)}</h2>
                 <div class="trust-badge">
-                    <span class="rating-stars" style="font-size: 1.5rem;">${'★'.repeat(Math.floor(faucet.trustScore))}</span>
-                    <span style="font-size: 1.5rem;">${faucet.trustScore} / 5</span>
+                    <span class="rating-stars" style="font-size: 1.5rem;">${stars(faucet.trustScore)}</span>
+                    <span style="font-size: 1.5rem;">${escapeHtml(faucet.trustScore)} / 5</span>
                 </div>
-                <p>${faucet.summary}</p>
+                <p>${escapeHtml(faucet.summary)}</p>
                 <div class="card-bonus" style="margin-top: 20px;">
-                    <strong>BONUS EXCLUSIVO:</strong> ${faucet.bonus}
+                    <strong>BONUS EXCLUSIVO:</strong> ${escapeHtml(faucet.bonus)}
                 </div>
-                <a href="${faucet.referralLink}" target="_blank" class="cta-btn">¡Regístrate y Gana Ahora!</a>
+                <a href="${escapeHtml(referral)}" target="_blank" rel="noopener noreferrer" class="cta-btn">¡Regístrate y Gana Ahora!</a>
             </div>
             <div class="screenshot-container">
-                <img src="${faucet.image}" alt="${faucet.name}" style="width:100%; height:100%; object-fit: cover; border-radius: 20px;">
+                <img src="${escapeHtml(safeUrl(faucet.image))}" alt="${escapeHtml(faucet.name)}" style="width:100%; height:100%; object-fit: cover; border-radius: 20px;">
             </div>
         </div>
 
         <div class="strategy-section">
             <h3>Estrategia Recomendada</h3>
-            <p>${faucet.strategies}</p>
-            ${faucet.script !== 'N/A' ? `
-                <h4 style="margin-top: 20px;">Script / Código Útil:</h4>
-                <pre><code>${faucet.script}</code></pre>
-            ` : ''}
+            <p>${escapeHtml(faucet.strategies)}</p>
+            ${scriptSnippet}
         </div>
 
         <div style="margin-top: 40px;">
             <h3>Opiniones de Usuarios</h3>
-            ${faucet.reviews.map(r => `
-                <div style="background: var(--bg-card); padding: 15px; border-radius: 10px; margin-top: 10px;">
-                    <strong>${r.user}</strong> <span style="color: gold;">${'★'.repeat(r.rating)}</span>
-                    <p style="color: var(--text-dim);">${r.text}</p>
-                </div>
-            `).join('')}
+            ${reviewsHtml}
         </div>
     `;
 
@@ -84,27 +149,29 @@ function showDetail(faucet) {
 }
 
 function setupEventListeners() {
-    navBtns.forEach(btn => {
-        btn.onclick = () => {
-            navBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const filter = btn.dataset.filter;
-            const filteredData = filter === 'all' ? faucets : faucets.filter(f => f.type === filter);
-            renderList(filteredData);
+    navLinks.addEventListener('click', (event) => {
+        const btn = event.target.closest('.nav-btn');
+        if (!btn) return;
 
-            // Si estamos en detalle, volver al listado
-            faucetDetail.classList.add('hidden');
-            hero.classList.remove('hidden');
-            faucetList.classList.remove('hidden');
-        };
+        if (btn.id === 'blog-link') {
+            showBlog();
+            return;
+        }
+
+        navLinks.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        const filteredData = filter === 'all' ? faucets : faucets.filter(f => f.type === filter);
+        renderList(filteredData);
+
+        faucetDetail.classList.add('hidden');
+        hero.classList.remove('hidden');
+        faucetList.classList.remove('hidden');
     });
 
     document.getElementById('home-link').onclick = () => {
         location.reload();
-    };
-
-    document.getElementById('blog-link').onclick = () => {
-        showBlog();
     };
 }
 
