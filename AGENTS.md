@@ -21,7 +21,12 @@ Static single-page site (no build step, no framework). Open `index.html` directl
 ```bash
 node tools/validate-faucets.js   # validate faucets.js schema before committing
 python3 tools/weekly_site_check.py  # check all referral links, updates site-status-weekly.md
+node tools/generate-blogger-html-posts.js # generate individual HTML posts for Blogger
 ```
+
+## Git Conventions
+
+- Always use `--no-gpg-sign` for all `git commit` commands in this repository.
 
 No npm, no bundler, no dev server. Just open `index.html`.
 
