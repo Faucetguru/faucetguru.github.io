@@ -176,7 +176,44 @@ function setupEventListeners() {
 }
 
 function showBlog() {
-    window.location.href = 'blog/blogger-export/html-posts/index.html';
+    hero.classList.add('hidden');
+    faucetList.classList.add('hidden');
+    faucetDetail.classList.remove('hidden');
+    
+    faucetDetail.innerHTML = `
+        <button class="back-btn" id="back-to-list">← Volver al listado</button>
+        <div id="blog-container" style="max-width: 900px; margin: 0 auto;">
+            <p style="text-align: center; color: var(--text-dim);">Cargando blog...</p>
+        </div>
+    `;
+    
+    fetch('blog/blogger-export/html-posts/index.html')
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.text();
+        })
+        .then(html => {
+            const blogContainer = document.getElementById('blog-container');
+            blogContainer.innerHTML = html;
+            
+            // Open external links in new tab
+            blogContainer.querySelectorAll('a').forEach(link => {
+                if (link.hostname && link.hostname !== window.location.hostname) {
+                    link.setAttribute('target', '_blank');
+                    link.setAttribute('rel', 'noopener noreferrer');
+                }
+            });
+        })
+        .catch(err => {
+            const blogContainer = document.getElementById('blog-container');
+            blogContainer.innerHTML = `<p style="color: red;">Error cargando blog: ${escapeHtml(err.message)}</p>`;
+        });
+    
+    document.getElementById('back-to-list').onclick = () => {
+        faucetDetail.classList.add('hidden');
+        hero.classList.remove('hidden');
+        faucetList.classList.remove('hidden');
+    };
 }
 
 init();
