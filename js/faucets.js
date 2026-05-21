@@ -32,21 +32,6 @@ window.faucetsData = [
         ]
     },
     {
-        id: "faucetcrypto",
-        name: "FaucetCrypto",
-        type: "ptc",
-        trustScore: 4.5,
-        bonus: "Bonus de nivel progresivo (hasta +25%)",
-        summary: "Multicoin faucet con sistema de RPG y niveles. Muy interactiva.",
-        referralLink: "https://faucetcrypto.com/ref/TU_ID", // Falta este link específico en el mensaje del usuario, lo dejamos como recordatorio o placeholder si no lo pasó.
-        image: "https://via.placeholder.com/600x400/0a0b10/00ff88?text=FaucetCrypto+Screenshot",
-        strategies: "Completa los 'Shortlinks' primero para subir de nivel rápido y ganar más bonus.",
-        script: "document.querySelectorAll('.ptc-btn').forEach(b => b.classList.add('highlight'));",
-        reviews: [
-            { user: "Mario22", text: "Pagos instantáneos a FaucetPay.", rating: 5 }
-        ]
-    },
-    {
         id: "viefaucet",
         name: "Vie Faucet",
         type: "faucet",
@@ -64,17 +49,17 @@ window.faucetsData = [
     },
     {
         id: "litecoinfarm",
-        name: "Litecoin Farm (Alerta)",
+        name: "Litecoin Farm",
         type: "mining",
-        trustScore: 1.5,
-        bonus: "N/A - ¡CUIDADO!",
-        summary: "ATENCIÓN: Múltiples reportes indican que este sitio puede ser un SCAM. Se recomienda NO invertir dinero real.",
-        referralLink: "#",
-        image: "https://via.placeholder.com/600x400/440000/ffffff?text=ALERTA+RIESGO",
-        strategies: "EVITAR este sitio. Mantener los fondos a salvo.",
+        trustScore: 4.2,
+        bonus: "5000 Satoshis gratis para new miners",
+        summary: "Simulador de minería directa. Mine LTC y Bitcoin. Retiros instantáneos.",
+        referralLink: "https://litecoinfarm.online/index.php?ref=503910",
+        image: "https://via.placeholder.com/600x400/0a0b10/00ff88?text=Litecoin+Farm",
+        strategies: "Mantén la ventana abierta para que la computadora mine continuamente. Reclamaciones diarias para bonificaciones.",
         script: "N/A",
         reviews: [
-            { user: "Victima1", text: "No pagan y piden dinero para retirar.", rating: 1 }
+            { user: "LTCMiner99", text: "Funciona bien, recomendado para pasivo.", rating: 4 }
         ]
     },
     {
