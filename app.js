@@ -176,24 +176,7 @@ function setupEventListeners() {
 }
 
 function showBlog() {
-    hero.classList.add('hidden');
-    faucetList.classList.add('hidden');
-    faucetDetail.classList.remove('hidden');
-
-    faucetDetail.innerHTML = `
-        <button class="back-btn" id="back-to-list-blog">← Volver al listado</button>
-        <div class="strategy-section" style="text-align: center; padding: 100px 20px;">
-            <h2 style="font-size: 3rem; margin-bottom: 20px;">Blog Faucet Guru</h2>
-            <p style="font-size: 1.2rem; color: var(--text-dim);">Próximamente: Las mejores estrategias, noticias del mundo cripto y tutoriales paso a paso.</p>
-            <div style="margin-top: 40px; opacity: 0.5; font-size: 5rem;">✍️</div>
-        </div>
-    `;
-
-    document.getElementById('back-to-list-blog').onclick = () => {
-        faucetDetail.classList.add('hidden');
-        hero.classList.remove('hidden');
-        faucetList.classList.remove('hidden');
-    };
+    window.location.href = 'blog/blogger-export/html-posts/index.html';
 }
 
 init();
