@@ -8,7 +8,6 @@
     --text-main: #e6f1ff;
     --text-dim: #8892b0;
     --glass-border: rgba(255, 255, 255, 0.1);
-    --accent-red: #ff4d4d;
     --accent-orange: #ffa500;
 }
 
@@ -231,16 +230,35 @@ nav {
     font-size: 1rem;
 }
 
-.detail-header {
+    .detail-header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
     margin-bottom: 60px;
 }
 
-.detail-info h2 {
-    font-size: 3rem;
-    margin-bottom: 15px;
+#blog-container {
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+}
+
+#blog-container h1 {
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-main) !important;
+    margin-bottom: 20px;
+}
+
+#blog-container a {
+    color: var(--primary) !important;
+    text-decoration: none;
+}
+
+#blog-container a:hover {
+    text-decoration: underline;
+}
+
+#blog-container .date {
+    color: var(--text-dim);
 }
 
 .screenshot-container {
@@ -253,6 +271,7 @@ nav {
     justify-content: center;
     color: var(--text-dim);
 }
+
 
 .cta-btn {
     display: inline-block;
@@ -298,4 +317,46 @@ footer {
     border-top: 1px solid var(--glass-border);
     text-align: center;
     color: var(--text-dim);
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+    .nav-btn {
+        font-size: 0.7rem;
+        padding: 4px 9px;
+    }
+    #hero h2 {
+        font-size: 2rem;
+    }
+    #hero p {
+        font-size: 1rem;
+    }
+    #hero {
+        padding: 40px 0;
+    }
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .faucet-card {
+        padding: 15px;
+    }
+    .card-title {
+        font-size: 1.2rem;
+    }
+    .detail-header {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .detail-info h2 {
+        font-size: 2rem;
+    }
+    .screenshot-container {
+        height: 200px;
+    }
 }

@@ -194,7 +194,10 @@ function showBlog() {
         })
         .then(html => {
             const blogContainer = document.getElementById('blog-container');
-            blogContainer.innerHTML = html;
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const bodyContent = doc.body.innerHTML;
+            blogContainer.innerHTML = bodyContent;
             
             // Open external links in new tab
             blogContainer.querySelectorAll('a').forEach(link => {
@@ -206,7 +209,7 @@ function showBlog() {
         })
         .catch(err => {
             const blogContainer = document.getElementById('blog-container');
-            blogContainer.innerHTML = `<p style="color: red;">Error cargando blog: ${escapeHtml(err.message)}</p>`;
+            blogContainer.innerHTML = `<p style="color: var(--accent-orange);">Error cargando blog: ${escapeHtml(err.message)}</p>`;
         });
     
     document.getElementById('back-to-list').onclick = () => {

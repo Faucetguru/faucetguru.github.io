@@ -1,0 +1,25 @@
+{
+  "name": "faucetguru.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "http-server -p 3005 --bind 0.0.0.0",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Faucetguru/faucetguru.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Faucetguru/faucetguru.github.io/issues"
+  },
+  "homepage": "https://github.com/Faucetguru/faucetguru.github.io#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

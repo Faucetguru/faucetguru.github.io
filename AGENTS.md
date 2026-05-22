@@ -57,7 +57,7 @@ Append an object to `js/faucets.js` (inside the `window.faucetsData` array). Req
 - URLs are sanitized by `safeUrl()` – only `http://`/`https://` pass; `#`, empty, and `TU_ID` are blocked.
 - External links use `rel="noopener noreferrer"`.
 - Nav filter buttons are dynamically generated from unique `type` values in the data.
-- The blog section (`showBlog()`) is a placeholder – replace its HTML to activate.
+- The blog section (`showBlog()`) should link  blog/blogger-export/html-posts/
 
 ## Weekly check
 
