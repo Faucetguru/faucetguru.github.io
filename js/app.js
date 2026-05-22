@@ -187,7 +187,7 @@ function showBlog() {
         </div>
     `;
     
-    fetch('blog/blogger-export/html-posts/index.html')
+    fetch('blog/posts/index.html')
         .then(response => {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             return response.text();
