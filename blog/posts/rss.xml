@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:b="http://www.google.com/2005/gdata/binary">
+  <channel>
+    <title>FaucetGuru Blog</title>
+    <link>https://faucetguru.github.io/blog</link>
+    <description>Blog de faucets, wallets, minería y earning apps en español</description>
+    <language>es-ES</language>
+    <atom:link href="https://faucetguru.github.io/blog" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Jun 2026 10:00:00 GMT</lastBuildDate>
+
+    <!-- Post 1: Guía Monad Faucet -->
+    <item>
+      <title>Guía completa: Cómo usar el faucet de Monad para ganar tokens gratis en 2026</title>
+      <link>https://faucetguru.github.io/blog/posts/gui-a-completa-como-usar-el-faucet-de-monad-para-ganar-tokens-gratis-en-2026.html</link>
+      <description><![CDATA[
+<strong>Monad</strong> es una de las blockchains más esperadas del 2026, y si todavía no tenés tokens para probar su testnet, hay una forma gratuita de conseguirlos: el faucet oficial. En este tutorial te explicamos paso a paso cómo acceder, reclamar y usar esos tokens sin invertir un peso.<br><br>
+<h2>¿Qué es Monad y por qué necesitas tokens de testnet?</h2><br><br>
+Monad es una blockchain EVM-compatible que promete velocidades ultra-rápidas y costos extremadamente bajos. Para probar contratos inteligentes, transacciones y apps en su testnet, necesitás tokens de prueba (testnet tokens) que no tienen valor real pero funcionan igual que la moneda oficial (MON).<br><br>
+<h2>Cómo acceder al faucet de Monad (2026)</h2><br><br>
+<strong>Paso 1: Conecta tu wallet</strong><br>
+Necesitás una wallet compatible con Monad. Las opciones más usadas son:<br>
+- <strong>Phantom</strong> (extensión de Chrome/Firefox)<br>
+- <strong>MetaMask</strong> con configuración manual de RPC<br>
+- <strong>Backpack Wallet</strong> (soporta Solana y Monad)<br><br>
+<strong>Paso 2: Cambia a la red de testnet</strong><br>
+En la configuración de tu wallet, agregá la RPC de Monad Testnet:<br>
+<code>Chain ID: 10001<br>
+RPC URL: https://testnet-rpc.monad.xyz<br>
+Currency: MON</code><br><br>
+<strong>Paso 3: Accioná al faucet</strong><br>
+Visitá <a href="https://faucet.monad.xyz">https://faucet.monad.xyz</a> e iniciá sesión con tu wallet. Seleccioná la cantidad de tokens a reclamar y confirmá la transacción.<br><br>
+<h2>Conclusión</h2><br><br>
+El faucet de Monad es la puerta de entrada perfecta para probar la blockchain más ambiciosa del 2026. ¡No te quedes atrás!
+      ]]></description>
+      <pubDate>Mon, 09 Jun 2026 10:00:00 GMT</pubDate>
+    </item>
+
+    <!-- Post 2: Guía Sonic Blaze -->
+    <item>
+      <title>Guía Sonic Blaze Testnet: cómo reclamar tokens gratis para ganar SAT y probar la blockchain</title>
+      <link>https://faucetguru.github.io/blog/posts/gui-sonic-blaze-testnet-como-reclamar-tokens-gratis-para-ganar-sat-y-probar-la-blockchain.html</link>
+      <description><![CDATA[
+      <strong>Sonic</strong> es una blockchain EVM que promete ser la más rápida del mercado. Si todavía no tenés tokens de testnet para probar su ecosistema, el faucet oficial te da SAT (Sonic's test token) de forma gratuita. Acá te explico cómo acceder paso a paso.<br><br>
+      <h2>¿Qué es Sonic y por qué usar el testnet?</h2><br><br>
+      Sonic es una blockchain EVM-compatible con <strong>200,000+ TPS</strong> y <strong>300ms de latencia</strong>. El testnet te permite probar contratos inteligentes, swaps y apps sin arriesgar dinero real.<br><br>
+      <h2>Pasos para reclamar SAT del faucet</h2><br><br>
+      <strong>1. Instalá una wallet compatible</strong><br>
+      - Phantom (recomendado para principiantes)<br>
+      - MetaMask (con configuración RPC manual)<br><br>
+      <strong>2. Agregá Sonic Blaze Testnet</strong><br>
+      Configurá tu wallet con estos datos:<br>
+      <code>Chain ID: 55532<br>RPC URL: https://sonic-blaze-testnet.g.alchemy.com/v2/YOUR-API-KEY</code><br><br>
+      <strong>3. Accioná al faucet</strong><br>
+      Visitá <a href="https://faucet.soniclabs.com">https://faucet.soniclabs.com</a>, conectá tu wallet y confirmá.<br><br>
+      <h2>Conclusión</h2><br><br>
+      El faucet de Sonic Blaze te da los tokens necesarios para ser parte de la próxima gran blockchain. ¡Anotá el roadmap de Sonic, viene cargado!<br>
+      ]]></description>
+      <pubDate>Mon, 09 Jun 2026 10:05:00 GMT</pubDate>
+    </item>
+
+    <!-- Post 3: Guía Berachain -->
+    <item>
+      <title>Berachain Faucet Guide 2026: cómo obtener tokens de prueba gratis (ARTIO/SEPOLIA)</title>
+      <link>https://faucetguru.github.io/blog/posts/berachain-faucet-guide-2026-como-obtener-tokens-de-prueba-gratis-artiosepolia.html</link>
+      <description><![CDATA[
+      <strong>Berachain</strong> es una blockchain innovadora basada en el consensus de validatores que está ganando trayectoria en el ecosistema crypto. Si querés probar su testnet, necesitás tokens de prueba que podés obtener <strong>gratis</strong> del faucet oficial.<br><br>
+      <h2>¿Qué es Berachain y por qué probar el testnet?</h2><br><br>
+      Berachain usa un modelo de <strong>consensus de validatores</strong> único y ofrece un ecosistema completo con <strong>BeraWallet</strong>, <strong>BeraSwap</strong> y más. El testnet te permite probar el ecosistema completo sin invertir dinero real.<br><br>
+      <h2>Cómo acceder al Berachain Faucet</h2><br><br>
+      <strong>Paso 1: Conectá tu wallet</strong><br>
+      Usá una wallet compatible con Berachain (EVM):<br>
+      - MetaMask<br>
+      - Rabby Wallet<br>
+      - Trust Wallet<br><br>
+      <strong>Paso 2: Agregá la red de testnet</strong><br>
+      <code>Network Name: Berachain Testnet (Artio)<br>
+      RPC URL: https://bera-testnet.g.alchemy.com/v2/YOUR-API-KEY<br>
+      Chain ID: 80001</code><br><br>
+      <strong>Paso 3: Accioná al faucet</strong><br>
+      Visitá <a href="https://faucet.berachain.com">https://faucet.berachain.com</a> y reclamá tus tokens.<br><br>
+      <h2>Conclusión</h2><br><br>
+      El faucet de Berachain te da acceso completo al ecosistema de una de las blockchains más innovadoras del 2026. ¡No te pierdas esta oportunidad!<br>
+      ]]></description>
+      <pubDate>Mon, 09 Jun 2026 10:10:00 GMT</pubDate>
+    </item>
+
+    <!-- Post 4: Guía Sui Faucet -->
+    <item>
+      <title>Cómo usar el Sui Faucet 2026: obtén SUI testnet gratis para probar la blockchain</title>
+      <link>https://faucetguru.github.io/blog/posts/como-usar-el-sui-faucet-2026-obten-sui-testnet-gratis-para-probar-la-blockchain.html</link>
+      <description><![CDATA[
+      <strong>Sui</strong> es una blockchain de alto rendimiento diseñada para escalabilidad masiva. Si querés probar su testnet, necesitás tokens de prueba que podés obtener <strong>gratis</strong> del faucet oficial.<br><br>
+      <h2>Pasos para reclamar SUI del faucet</h2><br><br>
+      <strong>1. Instalá una wallet compatible</strong><br>
+      - Sui Wallet (oficial)<br>
+      - Ethos Wallet<br>
+      - Martian Wallet<br><br>
+      <strong>2. Conectá a la red de testnet</strong><br>
+      Configurá tu wallet con:<br>
+      <code>Network: Sui Testnet<br>RPC URL: https://fullnode.testnet.sui.io:443</code><br><br>
+      <strong>3. Accioná al faucet oficial</strong><br>
+      Visitá <a href="https://sui.io/faucet">https://sui.io/faucet</a>, pegá tu dirección y clickeá "Faucet".<br><br>
+      <h2>Conclusión</h2><br><br>
+      El faucet de Sui te da los tokens necesarios para ser parte de la blockchain del futuro. ¡Anotá el roadmap, viene cargado de novedades para 2026!<br>
+      ]]></description>
+      <pubDate>Mon, 09 Jun 2026 10:15:00 GMT</pubDate>
+    </item>
+
+    <!-- Post 5: Backpack Wallet Review -->
+    <item>
+      <title>Backpack Wallet review 2026: ¿Es la mejor wallet para Solana, Monad y Berachain?</title>
+      <link>https://faucetguru.github.io/blog/posts/backpack-wallet-review-2026-es-la-mejor-wallet-para-solana-monad-y-berachain.html</link>
+      <description><![CDATA[
+      <strong>Backpack Wallet</strong> es una billetera cripto multi-chain que está ganando popularidad rápidamente. Soporta Solana, Monad, Berachain y otras redes emergentes. En este análisis te explico por qué sumarla a tu stack de wallets en 2026.<br><br>
+      <h2>Características principales</h2><br><br>
+      <ul><li>  <strong>Soporte multi-chain:</strong> Solana, Monad, Berachain, Ethereum, Polygon, BNB Chain y más de 30 redes.</li><li>  <strong>Intercambio interno:</strong> Swap de tokens sin salir de la wallet.</li><li>  <strong>NFT Viewer:</strong> Visualización de NFTs directamente en la app.</li></ul><br><br>
+      <h2>¿Cómo instalar y configurar Backpack Wallet?</h2><br><br>
+      Visitá <a href="https://backpack.land">https://backpack.land</a>, creá tu wallet o importá una existente con tu frase seed de 12 palabras.<br><br>
+      <h2>Conclusión</h2><br><br>
+      Backpack Wallet es una opción <strong>muy sólida</strong> para usuarios que quieren explorar Monad, Berachain y otras redes emergentes. ¡Instalala y empezá a explorar!<br>
+      ]]></description>
+      <pubDate>Mon, 09 Jun 2026 10:20:00 GMT</pubDate>
+    </item>
+
+  </channel>
+</rss>
