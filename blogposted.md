@@ -5,14 +5,14 @@ Marca con `x` los que ya están publicados.
 - [ ] Reseña de 99Faucet: ¿Es confiable para ganar crypto en Argentina?
 - [ ] Reseña de ABC Mining: ¿Es confiable para ganar crypto en Argentina?
 - [ ] Reseña de Autofaucet DutchyCorp: ¿Es confiable para ganar crypto en Argentina?
-- [ ] Backpack Wallet review 2026: ¿Es la mejor wallet para Solana, Monad y Berachain?
-- [ ] Berachain Faucet Guide 2026: cómo obtener tokens de prueba gratis (ARTIO/SEPOLIA)
+- [x] Backpack Wallet review 2026: ¿Es la mejor wallet para Solana, Monad y Berachain?
+- [x] Berachain Faucet Guide 2026: cómo obtener tokens de prueba gratis (ARTIO/SEPOLIA)
 - [ ] Reseña de BNBfaucet Doge: ¿Es confiable para ganar Dogecoin?
 - [ ] Reseña de CashMonster: ¿Es la mejor plataforma GPT para Argentina?
 - [ ] Reseña de Coinpayu: ¿Es confiable para ganar crypto en Argentina?
 - [ ] Reseña de Cointiply: ¿Es confiable para ganar crypto en Argentina?
 - [ ] Cómo retirar satoshis desde Argentina de forma segura
-- [ ] Cómo usar el Sui Faucet 2026: obtén SUI testnet gratis para probar la blockchain
+- [x] Cómo usar el Sui Faucet 2026: obtén SUI testnet gratis para probar la blockchain
 - [ ] Reseña de EarnBonk: ¿Es confiable para ganar crypto en Argentina?
 - [ ] Reseña de EarnCrypto: ¿Es confiable para ganar cripto? Guía 2026
 - [ ] Reseña de EasyTrx.io: ¿Es confiable para ganar crypto en Argentina?
@@ -29,8 +29,8 @@ Marca con `x` los que ya están publicados.
 - [ ] Reseña de Gamehag: ¿Ganar crypto jugando videojuegos? Guía Definitiva 2026
 - [ ] Reseña de Grass: ¿Ganar dinero compartiendo tu internet? Guía 2026
 - [ ] Guía completa: Ganar Bitcoin Gratis en Argentina
-- [ ] Guía completa: Cómo usar el faucet de Monad para ganar tokens gratis en 2026
-- [ ] Guía Sonic Blaze Testnet: cómo reclamar tokens gratis para ganar SAT y probar la blockchain
+- [x] Guía completa: Cómo usar el faucet de Monad para ganar tokens gratis en 2026
+- [x] Guía Sonic Blaze Testnet: cómo reclamar tokens gratis para ganar SAT y probar la blockchain
 - [ ] Reseña de Keran USDT: ¿Es confiable para ganar crypto en Argentina?
 - [ ] Reseña de Litecoin Farm (Alerta): ¿Es confiable para ganar crypto en Argentina?
 - [ ] Reseña de Litecoin Farm Online: ¿Es confiable o estafa?
