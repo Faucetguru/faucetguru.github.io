@@ -1,9 +1,54 @@
 # Checklist de posts enviados a Blogger
 
-Marca con `x` los que ya están publicados en Blogger.
+Marca con `x` los que ya están publicados.
 
+- [ ] Reseña de 99Faucet: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de ABC Mining: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de Autofaucet DutchyCorp: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Backpack Wallet review 2026: ¿Es la mejor wallet para Solana, Monad y Berachain?
+- [ ] Berachain Faucet Guide 2026: cómo obtener tokens de prueba gratis (ARTIO/SEPOLIA)
+- [ ] Reseña de BNBfaucet Doge: ¿Es confiable para ganar Dogecoin?
+- [ ] Reseña de CashMonster: ¿Es la mejor plataforma GPT para Argentina?
+- [ ] Reseña de Coinpayu: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de Cointiply: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Cómo retirar satoshis desde Argentina de forma segura
+- [ ] Cómo usar el Sui Faucet 2026: obtén SUI testnet gratis para probar la blockchain
+- [ ] Reseña de EarnBonk: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de EarnCrypto: ¿Es confiable para ganar cripto? Guía 2026
+- [ ] Reseña de EasyTrx.io: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de FaucetCrypto: ¿Es la plataforma más completa para ganar cripto en Argentina?
+- [ ] Reseña de FaucetPay: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Faucets BTC vs. USDT vs. TRON
+- [ ] Faucets Crypto 2026: Todo lo que necesitas saber
+- [ ] Faucets más rápidas para ganar satoshis
+- [ ] Faucets que pagan al instante vs. retiro lento
+- [ ] Reseña de FaucetWallet: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de FreeBitco.in: ¿Es la faucet más confiable para ganar BTC en Argentina?
+- [ ] Reseña de FreeBTCCO: ¿Es confiable para ganar Bitcoin gratis? Guía 2026
+- [ ] Reseña de FreeTRON: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de Gamehag: ¿Ganar crypto jugando videojuegos? Guía Definitiva 2026
+- [ ] Reseña de Grass: ¿Ganar dinero compartiendo tu internet? Guía 2026
+- [ ] Guía completa: Ganar Bitcoin Gratis en Argentina
 - [ ] Guía completa: Cómo usar el faucet de Monad para ganar tokens gratis en 2026
 - [ ] Guía Sonic Blaze Testnet: cómo reclamar tokens gratis para ganar SAT y probar la blockchain
-- [ ] Berachain Faucet Guide 2026: cómo obtener tokens de prueba gratis (ARTIO/SEPOLIA)
-- [ ] Cómo usar el Sui Faucet 2026: obtén SUI testnet gratis para probar la blockchain
-- [ ] Backpack Wallet review 2026: ¿Es la mejor wallet para Solana, Monad y Berachain?
+- [ ] Reseña de Keran USDT: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de Litecoin Farm (Alerta): ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de Litecoin Farm Online: ¿Es confiable o estafa?
+- [ ] Reseña de Litepick: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de LTCMiner: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de LuckyWatch: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de MakeYouTask: ¿Cómo ganar dinero con tareas? Guía 2026
+- [ ] Mejores faucets para argentinos 2026
+- [ ] Mejores faucets por payout mínimo
+- [ ] Mejores wallets para recibir USDT 2026
+- [ ] Reseña de Multiminer: ¿Minería real o estafa peligrosa? Guía 2026
+- [ ] Reseña de My CWallet: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de Realix: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de RollerCoin: ¿Es el mejor simulador de minería para ganar cripto en Argentina?
+- [ ] Reseña de Scalevance: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Top 10 Faucets por Trust Score
+- [ ] Reseña de TOP69 Crypto Casinos: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Reseña de Tronpayu.io: ¿Es confiable para ganar crypto en Argentina?
+- [ ] Tutorial: Ganar bitcoin gratis desde celular
+- [ ] Reseña de Vie Faucet: ¿Es una buena opción para ganar cripto en Argentina?
+- [ ] Reseña de Wipter: ¿Es confiable para ganar crypto en Argentina?
