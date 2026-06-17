@@ -2,8 +2,12 @@
 
 Marca con `x` los que ya están publicados.
 
-- [ ] Reseña de 99Faucet: ¿Es confiable para ganar crypto en Argentina?
-- [ ] Reseña de ABC Mining: ¿Es confiable para ganar crypto en Argentina?
+- [x] Reseña de 99Faucet: ¿Es confiable para ganar crypto en Argentina?
+- [x] Reseña de ABC Mining: ¿Es confiable para ganar crypto en Argentina?
+- [x] ACI Airdrop: cómo participar desde Argentina, guía paso a paso 2026
+- [x] Tangem Wallet en Argentina: ¿la mejor billetera hardware para crypto?
+- [x] Ready Wallet (ex Argent X): la wallet inteligente de Starknet para Argentina
+- [x] Gemifaucet: la faucet de Telegram que paga cada 30 segundos ¿es confiable?
 - [ ] Reseña de Autofaucet DutchyCorp: ¿Es confiable para ganar crypto en Argentina?
 - [x] Backpack Wallet review 2026: ¿Es la mejor wallet para Solana, Monad y Berachain?
 - [x] Berachain Faucet Guide 2026: cómo obtener tokens de prueba gratis (ARTIO/SEPOLIA)
