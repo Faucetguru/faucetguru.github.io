@@ -12,12 +12,9 @@ const TYPE_LABELS = {
     ptc: 'PTC',
     rewards: 'Recompensas',
     tasks: 'Tareas',
-    contests: 'Concursos',
     investment: 'Inversión',
     referral: 'Referidos',
     autofaucet: 'AutoFaucet',
-    service: 'Servicios',
-    affiliate: 'Afiliados',
     cloud_mining: 'Cloud Mining',
     wallet: 'Wallet',
     microwallet: 'MicroWallet'
