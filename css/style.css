@@ -319,6 +319,40 @@ footer {
     color: var(--text-dim);
 }
 
+/* Blog Navigation */
+.blog-nav {
+    background: #1a1a1a;
+    border-bottom: 1px solid var(--glass-border);
+    padding: 12px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.blog-nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.blog-nav-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.blog-nav-link:hover {
+    text-decoration: underline;
+}
+
+.blog-nav-spacer {
+    flex: 1;
+}
+
 /* Mobile Responsive */
 @media (max-width: 600px) {
     .nav-links {
