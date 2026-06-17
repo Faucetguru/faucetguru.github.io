@@ -43,7 +43,8 @@ function stars(score) {
 }
 
 function getAvailableTypes() {
-    return [...new Set(faucets.map(f => String(f.type || '').trim()).filter(Boolean))].sort();
+    const excludedTypes = new Set(['contests', 'affiliate']);
+    return [...new Set(faucets.map(f => String(f.type || '').trim()).filter(type => type && !excludedTypes.has(type)))].sort();
 }
 
 function renderNavButtons() {
