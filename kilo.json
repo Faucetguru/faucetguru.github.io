@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "blogger": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-blogger"
+      ],
+      "env": {
+        "BLOGGER_API_KEY": "AIzaSyDIElH8lCWyqPyySAn8kiUzqx1DpbiHqjQ"
+      }
+    }
+  }
+}
