@@ -6,15 +6,19 @@ Static single-page site (no build step, no framework). Open `index.html` directl
 
 ## File map
 
-| File | Role |
+| File/Directory | Role |
 |---|---|
-| `js/faucets.js` | **Only data file** – `window.faucetsData` array. Every site is an object here. |
-| `app.js` | Renders cards, filters by `type`, detail view, blog placeholder. |
-| `style.css` | Dark theme, CSS vars in `:root`, responsive grid. |
-| `index.html` | Shell – loads `faucets.js` then `app.js` (order matters). |
-| `tools/validate-faucets.js` | Node validator for `faucets.js` schema. |
-| `tools/weekly_site_check.py` | Python script that curls every referral link, writes `site-status-weekly.md`. |
-| `blogger-export/` | Generated Blogger XML exports (not used by the site). |
+| `index.html` | Main HTML shell – loads `js/faucets.js` then `js/app.js` (order matters). |
+| `js/app.js` | Renders faucet cards, filters by `type`, detail view. |
+| `js/faucets.js` | **Data file** – `window.faucetsData` array with faucet objects. |
+| `js/blogger-client.js` | Blogger API client for post management. |
+| `js/parsed-sites.json` | Parsed sites data. |
+| `css/style.css` | Dark theme, CSS vars in `:root`, responsive grid. |
+| `blog/` | Blog pages – `index.html`, `posts/`, `template-post.html`, `sitemap.md`. |
+| `blogger-export/` | Generated Blogger XML exports. |
+| `seo-tools/` | SEO utilities (e.g., `seo-tools/seo-gen.js`). |
+| `tools/` | Python/Node.js automation scripts. |
+| `blog/posts/` | Individual HTML blog posts. |
 
 ## Commands
 
@@ -22,13 +26,20 @@ Static single-page site (no build step, no framework). Open `index.html` directl
 node tools/validate-faucets.js   # validate faucets.js schema before committing
 python3 tools/weekly_site_check.py  # check all referral links, updates site-status-weekly.md
 node tools/generate-blogger-html-posts.js # generate individual HTML posts for Blogger
+python3 tools/sync-blogger-posts.py # sync Blogger posts with local files
+python3 tools/send-to-blogger.py    # publish posts to Blogger
+python3 tools/validate-seo-posts.py    # validate HTML posts for SEO
 ```
 
 ## Git Conventions
 
 - Always use `--no-gpg-sign` for all `git commit` commands in this repository.
+- No npm, no bundler, no dev server. Just open `index.html`.
 
-No npm, no bundler, no dev server. Just open `index.html`.
+## Kilo Configuration
+
+- Config file: `kilo.json`
+- MCP servers configured: `blogger` (uses `mcp-blogger` package)
 
 ## Adding a new site
 
@@ -57,8 +68,48 @@ Append an object to `js/faucets.js` (inside the `window.faucetsData` array). Req
 - URLs are sanitized by `safeUrl()` – only `http://`/`https://` pass; `#`, empty, and `TU_ID` are blocked.
 - External links use `rel="noopener noreferrer"`.
 - Nav filter buttons are dynamically generated from unique `type` values in the data.
-- The blog section (`showBlog()`) should link  blog/blogger-export/html-posts/
+- The blog section (`showBlog()`) links to `blog/index.html`.
 
-## Weekly check
+## Tools Reference
 
-`tools/weekly_site_check.py` requires `node` and `curl`. It parses `faucets.js` via Node VM, then curls each referral link with a 15s timeout. Results overwrite `site-status-weekly.md`. Many sites show "SCAM WARNING" due to keyword detection in page body – this is heuristic, not definitive.
+### Faucet Data Management
+- `tools/validate-faucets.js` – validates schema for `js/faucets.js`
+- `tools/weekly_site_check.py` – curls referral links, writes `site-status-weekly.md`
+
+### Blog Posts (Blogger)
+- `tools/sync-blogger-posts.py` – sync Blogger API posts with local files
+- `tools/send-to-blogger.py` – publish HTML posts via email
+- `tools/list-blogger-posts.py` – list Blogger posts
+- `tools/update-blogger-post.py` – update existing Blogger posts
+- `tools/update-blogger-metadata.py` – update SEO metadata
+- `tools/post-to-blogger.py` – post management
+- `tools/send-unposted-to-blogger.py` – send unposted articles
+- `tools/send-2-pending.py` – send posts to pending status
+
+### SEO & Content
+- `tools/validate-seo-posts.py` – validate HTML posts (H1, meta description 70-160 chars, keywords min 3, content min 300 chars, images with alt)
+- `tools/audit-content.js` – content auditing
+- `tools/seo-blog-posts.js` – SEO optimization for blog posts
+- `tools/interlink_script.py` – interlink generation
+- `tools/generate-blog-index.js` – generate blog index
+
+### Translation & Updates
+- `tools/translate-post.py` – translate posts
+- `tools/update-post-spanish.py` – update Spanish posts
+- `tools/update-post-js.js` – update posts via JS
+
+### Utilities
+- `tools/generate-blogger-html-posts.js` – generate HTML posts
+- `tools/generate-blogger-xml.js` – generate Blogger XML
+- `tools/generate-token-from-code.py` – generate OAuth token
+- `tools/get-blogger-token.py` – get Blogger token
+- `tools/remove-anchors.py` – remove anchor tags from posts
+- `tools/parse-xml-to-json.js` – parse XML to JSON
+- `tools/generate-markdown-templates.js` – generate markdown templates
+- `tools/batch-post-blogs.py` – batch process posts
+- `tools/git-push.sh` – git push utility
+
+### Authentication
+- `tools/credentials.json` – Blogger API credentials
+- `tools/oauth-client.html` – OAuth client
+- `tools/oauth-url.txt` – OAuth URL
