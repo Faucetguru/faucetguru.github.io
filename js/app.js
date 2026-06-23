@@ -66,15 +66,40 @@ async function initVisitCounter() {
     const counterEl = document.getElementById('visit-count');
     if (!counterEl) return;
 
+    // Local storage based visit counter (Option 2 fallback)
+    const STORAGE_KEY = 'faucetguru-visits';
+    const LOCAL_KEY = 'faucetguru-local-count';
+    const SESSION_KEY = 'faucetguru-session-counted';
+    
+    // Try external API first
     try {
         const endpoint = 'https://api.countapi.xyz/hit/faucetguru.github.io/visits';
         const response = await fetch(endpoint);
-        if (!response.ok) throw new Error('countapi error');
-        const data = await response.json();
-        const value = Number(data.value);
-        counterEl.textContent = Number.isFinite(value) ? value.toLocaleString() : '--';
+        if (response.ok) {
+            const data = await response.json();
+            const value = Number(data.value);
+            if (Number.isFinite(value)) {
+                // Sync local storage with global count
+                localStorage.setItem(LOCAL_KEY, value.toString());
+                localStorage.setItem(SESSION_KEY, 'true');
+                counterEl.textContent = value.toLocaleString();
+                return;
+            }
+        }
+        throw new Error('countapi error');
     } catch (error) {
-        counterEl.textContent = '--';
+        // Fallback to localStorage-based counting
+        let localCount = Number(localStorage.getItem(LOCAL_KEY) || '0');
+        const sessionCounted = localStorage.getItem(SESSION_KEY);
+        
+        // Increment only once per session
+        if (!sessionCounted) {
+            localCount++;
+            localStorage.setItem(LOCAL_KEY, localCount.toString());
+            localStorage.setItem(SESSION_KEY, 'true');
+        }
+        
+        counterEl.textContent = `${localCount.toLocaleString()} visitas`;
     }
 }
 
