@@ -4,15 +4,17 @@ const faucetList = document.getElementById('faucet-list');
 const faucetDetail = document.getElementById('faucet-detail');
 const hero = document.getElementById('hero');
 const navLinks = document.querySelector('.nav-links');
+const searchInput = document.getElementById('nav-search');
 
 const TYPE_LABELS = {
     all: 'Todas',
     faucet: 'Faucets',
-    mining: 'Minería',
     ptc: 'PTC',
-    rewards: 'Recompensas',
+    mining: 'Minería',
     tasks: 'Tareas',
+    rewards: 'Recompensas',
     referral: 'Referidos',
+    wallet: 'Wallet',
 };
 
 function escapeHtml(value) {
@@ -59,6 +61,39 @@ function init() {
     renderList(faucets);
     setupEventListeners();
 }
+
+async function initVisitCounter() {
+    const counterEl = document.getElementById('visit-count');
+    if (!counterEl) return;
+
+    try {
+        const endpoint = 'https://api.countapi.xyz/hit/faucetguru.github.io/visits';
+        const response = await fetch(endpoint);
+        if (!response.ok) throw new Error('countapi error');
+        const data = await response.json();
+        const value = Number(data.value);
+        counterEl.textContent = Number.isFinite(value) ? value.toLocaleString() : '--';
+    } catch (error) {
+        counterEl.textContent = '--';
+    }
+}
+
+window.addEventListener('load', () => {
+    initVisitCounter();
+});
+
+let ticking = false;
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            const scrollY = window.scrollY || window.pageYOffset || 0;
+            const offset = Math.max(-120, Math.min(120, scrollY * 0.12));
+            document.documentElement.style.setProperty('--fglogo-parallax', `${offset}px`);
+            ticking = false;
+        });
+        ticking = true;
+    }
+}, { passive: true });
 
 function renderList(data) {
     faucetList.innerHTML = '';
