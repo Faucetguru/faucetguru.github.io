@@ -12,12 +12,7 @@ const TYPE_LABELS = {
     ptc: 'PTC',
     rewards: 'Recompensas',
     tasks: 'Tareas',
-    investment: 'Inversión',
     referral: 'Referidos',
-    autofaucet: 'AutoFaucet',
-    cloud_mining: 'Cloud Mining',
-    wallet: 'Wallet',
-    microwallet: 'MicroWallet'
 };
 
 function escapeHtml(value) {
