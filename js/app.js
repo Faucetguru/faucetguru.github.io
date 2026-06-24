@@ -109,23 +109,31 @@ window.addEventListener('load', () => {
 
 let ticking = false;
 const bgWrapper = document.querySelector('.bg-wrapper');
-const CONTENT_HEIGHT = document.body.scrollHeight - window.innerHeight;
+let contentHeight = document.body.scrollHeight - window.innerHeight;
+
+function updateParallax() {
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const maxScroll = Math.max(1, contentHeight);
+    const progress = scrollY / maxScroll;
+    const offset = progress * 100;
+    if (bgWrapper) bgWrapper.style.transform = `translateY(calc(-25% + ${offset}px))`;
+}
+
 window.addEventListener('scroll', () => {
     if (!ticking) {
         window.requestAnimationFrame(() => {
-            const scrollY = window.scrollY || window.pageYOffset || 0;
-            // Parallax inverso: baja al hacer scroll (positivo)
-            // Movimiento proporcional: cuanto más contenido, más se mueve
-            const maxScroll = Math.max(1, CONTENT_HEIGHT);
-            const progress = scrollY / maxScroll;
-            // Mover hacia abajo (positivo) para mostrar más de la imagen
-            const offset = progress * 100; // Ajusta la sensibilidad aquí
-            if (bgWrapper) bgWrapper.style.transform = `translateY(calc(-25% + ${offset}px))`;
+            updateParallax();
             ticking = false;
         });
         ticking = true;
     }
 }, { passive: true });
+
+// Recalculate on content load
+window.addEventListener('load', () => {
+    contentHeight = document.body.scrollHeight - window.innerHeight;
+    updateParallax();
+});
 
 function renderList(data) {
     faucetList.innerHTML = '';
