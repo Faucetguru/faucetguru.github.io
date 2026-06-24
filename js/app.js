@@ -225,6 +225,8 @@ function setupEventListeners() {
 
         if (btn.id === 'blog-link') {
             showBlog();
+            // Remove active from all buttons, don't add to Blog
+            navLinks.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             return;
         }
 
