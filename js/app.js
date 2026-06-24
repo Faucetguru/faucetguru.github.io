@@ -109,12 +109,18 @@ window.addEventListener('load', () => {
 
 let ticking = false;
 const bgWrapper = document.querySelector('.bg-wrapper');
+const CONTENT_HEIGHT = document.body.scrollHeight - window.innerHeight;
 window.addEventListener('scroll', () => {
     if (!ticking) {
         window.requestAnimationFrame(() => {
             const scrollY = window.scrollY || window.pageYOffset || 0;
-            const offset = Math.max(-120, Math.min(120, scrollY * 0.12));
-            if (bgWrapper) bgWrapper.style.transform = `translateY(${offset}px)`;
+            // Parallax inverso: baja al hacer scroll (positivo)
+            // Movimiento proporcional: cuanto más contenido, más se mueve
+            const maxScroll = Math.max(1, CONTENT_HEIGHT);
+            const progress = scrollY / maxScroll;
+            // Mover hacia abajo (positivo) para mostrar más de la imagen
+            const offset = progress * 100; // Ajusta la sensibilidad aquí
+            if (bgWrapper) bgWrapper.style.transform = `translateY(calc(-25% + ${offset}px))`;
             ticking = false;
         });
         ticking = true;
