@@ -116,7 +116,8 @@ function updateParallax() {
     const maxScroll = Math.max(1, contentHeight);
     const progress = scrollY / maxScroll;
     // Invertido: scroll down = move image up (negative offset)
-    const offset = progress * -100;
+    // 1.3x speed: movement is 1.3x faster
+    const offset = progress * -130;
     if (bgWrapper) bgWrapper.style.transform = `translateY(calc(25% + ${offset}px))`;
 }
 
