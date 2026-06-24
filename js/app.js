@@ -117,7 +117,7 @@ function updateParallax() {
     const progress = scrollY / maxScroll;
     // Invertido: scroll down = move image up (negative offset)
     // 1.3x speed: movement is 1.3x faster
-    const offset = progress * -130;
+    const offset = progress * -200;
     if (bgWrapper) bgWrapper.style.transform = `translateY(calc(25% + ${offset}px))`;
 }
 
@@ -225,8 +225,9 @@ function setupEventListeners() {
 
         if (btn.id === 'blog-link') {
             showBlog();
-            // Remove active from all buttons, don't add to Blog
+            // Remove active from all buttons, add to Blog
             navLinks.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
             return;
         }
 
