@@ -108,12 +108,13 @@ window.addEventListener('load', () => {
 });
 
 let ticking = false;
+const bgWrapper = document.querySelector('.bg-wrapper');
 window.addEventListener('scroll', () => {
     if (!ticking) {
         window.requestAnimationFrame(() => {
             const scrollY = window.scrollY || window.pageYOffset || 0;
             const offset = Math.max(-120, Math.min(120, scrollY * 0.12));
-            document.documentElement.style.setProperty('--fglogo-parallax', `${offset}px`);
+            if (bgWrapper) bgWrapper.style.transform = `translateY(${offset}px)`;
             ticking = false;
         });
         ticking = true;
