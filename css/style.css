@@ -35,7 +35,7 @@ body {
     background-position: center top;
     background-size: contain;
     background-repeat: no-repeat;
-    transform: translateY(-25%);
+    transform: translateY(25%);
     will-change: transform;
 }
 

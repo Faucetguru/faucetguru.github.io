@@ -115,8 +115,9 @@ function updateParallax() {
     const scrollY = window.scrollY || window.pageYOffset || 0;
     const maxScroll = Math.max(1, contentHeight);
     const progress = scrollY / maxScroll;
-    const offset = progress * 100;
-    if (bgWrapper) bgWrapper.style.transform = `translateY(calc(-25% + ${offset}px))`;
+    // Invertido: scroll down = move image up (negative offset)
+    const offset = progress * -100;
+    if (bgWrapper) bgWrapper.style.transform = `translateY(calc(25% + ${offset}px))`;
 }
 
 window.addEventListener('scroll', () => {
