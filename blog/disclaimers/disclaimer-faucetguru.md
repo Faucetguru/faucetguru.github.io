@@ -1,0 +1,3 @@
+# Descargo de Responsabilidad — FaucetGuru
+
+FaucetGuru es un sitio informativo y de referencia sobre plataformas de micro-recompensas y faucets. No garantizamos la confiabilidad, pagos ni la seguridad de sitios externos. El uso de enlaces de referidos implica que puedes generar recompensas para terceros sin costo adicional para vos. La operatoria en faunets y plataformas de terceros conlleva riesgos, incluidos fallos en pagos, cierres de servicios o cambios en sus términos. FaucetGuru no se responsabiliza por daños, pérdidas o perjuicios derivados del uso de la información aquí publicada. Hacé siempre tu propia investigación (DYOR).

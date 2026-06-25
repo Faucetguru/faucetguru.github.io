@@ -1,0 +1,3 @@
+# Descargo de Responsabilidad — Toxitrade
+
+Toxitrade es una aplicación en desarrollo que incorpora estrategias generadas con inteligencia artificial y sistemas de trading automatizado. El trading de criptomonedas y activos financieros conlleva un riesgo elevado de pérdida parcial o total del capital. Las estrategias basadas en IA no garantizan resultados positivos ni prevén escenarios de mercado extremos. El rendimiento pasado no es indicador de rendimiento futuro. Toxitrade no ofrece asesoramiento financiero regulado y su uso es bajo la exclusiva responsabilidad del usuario. Consulte a un asesor profesional antes de operar.
