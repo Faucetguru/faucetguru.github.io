@@ -53,7 +53,7 @@ function renderNavButtons() {
         return `<button class="nav-btn ${idx === 0 ? 'active' : ''}" data-filter="${escapeHtml(type)}">${escapeHtml(label)}</button>`;
     }).join('');
 
-    navLinks.innerHTML = `${filterButtonsHtml}<button class="nav-btn" id="blog-link">Blog</button>`;
+    navLinks.innerHTML = `${filterButtonsHtml}<button class="nav-btn" id="blog-link">Blog</button><button class="nav-btn" id="bet-link">Bet</button>`;
 }
 
 function init() {
@@ -231,6 +231,13 @@ function setupEventListeners() {
             return;
         }
 
+        if (btn.id === 'bet-link') {
+            showBet();
+            navLinks.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            return;
+        }
+
         navLinks.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
@@ -272,7 +279,6 @@ function showBlog() {
             const bodyContent = doc.body.innerHTML;
             blogContainer.innerHTML = bodyContent;
             
-            // Open external links in new tab
             blogContainer.querySelectorAll('a').forEach(link => {
                 if (link.hostname && link.hostname !== window.location.hostname) {
                     link.setAttribute('target', '_blank');
@@ -283,6 +289,49 @@ function showBlog() {
         .catch(err => {
             const blogContainer = document.getElementById('blog-container');
             blogContainer.innerHTML = `<p style="color: var(--accent-orange);">Error cargando blog: ${escapeHtml(err.message)}</p>`;
+        });
+    
+    document.getElementById('back-to-main').onclick = () => {
+        faucetDetail.classList.add('hidden');
+        hero.classList.remove('hidden');
+        faucetList.classList.remove('hidden');
+    };
+}
+
+function showBet() {
+    hero.classList.add('hidden');
+    faucetList.classList.add('hidden');
+    faucetDetail.classList.remove('hidden');
+    
+    faucetDetail.innerHTML = `
+        <button class="back-btn" id="back-to-main">← Volver a Faucets</button>
+        <div id="bet-container" style="max-width: 1200px; margin: 0 auto;">
+            <p style="text-align: center; color: var(--text-dim);">Cargando Bet...</p>
+        </div>
+    `;
+    
+    fetch('bet/index.html')
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.text();
+        })
+        .then(html => {
+            const betContainer = document.getElementById('bet-container');
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const bodyContent = doc.body.innerHTML;
+            betContainer.innerHTML = bodyContent;
+            
+            betContainer.querySelectorAll('a').forEach(link => {
+                if (link.hostname && link.hostname !== window.location.hostname) {
+                    link.setAttribute('target', '_blank');
+                    link.setAttribute('rel', 'noopener noreferrer');
+                }
+            });
+        })
+        .catch(err => {
+            const betContainer = document.getElementById('bet-container');
+            betContainer.innerHTML = `<p style="color: var(--accent-orange);">Error cargando Bet: ${escapeHtml(err.message)}</p>`;
         });
     
     document.getElementById('back-to-main').onclick = () => {
