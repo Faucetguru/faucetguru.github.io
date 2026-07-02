@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FaucetGuru Bet — Reseñas y Bonos</title>
+  <meta name="description" content="Reseñas informativas de casinos y bonos, bonus, drops y promociones. Información editorial, no consejo financiero.">
+  <meta name="keywords" content="casino, reseñas, bonos, promociones, drops, latinoamérica, argentina, worldwide">
+  <link rel="canonical" href="https://faucetguru.github.io/bet/">
+  <meta property="og:title" content="FaucetGuru Bet — Reseñas y Bonos">
+  <meta property="og:description" content="Reseñas informativas de casinos y bonos. Juego responsable: 18+.">
+  <meta property="og:url" content="https://faucetguru.github.io/bet/">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="bet/css/bet.css">
+</head>
+<body>
+  <div class="bg-wrapper"></div>
+  <div id="app">
+    <header>
+      <nav class="container">
+        <div class="logo" id="home-link">
+          <span class="logo-icon">⚡</span>
+          <h1>Faucet<span> Guru</span> — Bet</h1>
+        </div>
+        <div class="nav-links">
+          <button id="back-main" type="button">Volver a Faucets</button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section id="hero">
+        <div class="hero-content">
+          <h2>Reseñas informativas</h2>
+          <p>Contenido editorial sobre bonos, promociones y términos. No constituye consejo financiero ni promoción directa de juego.</p>
+          <p class="visit-counter">18+ | Juego responsable</p>
+        </div>
+      </section>
+
+      <section id="content-area">
+        <div id="bet-list" class="grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2026 FaucetGuru Bet. Contenido informativo, no consejo financiero. 18+.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="bet/js/bet-sites.js"></script>
+  <script src="bet/js/bet-app.js"></script>
+  <script>
+    document.getElementById("back-main").addEventListener("click", () => {
+      window.location.href = "/";
+    });
+    const data = window.betSitesData || [];
+    initBetApp(data);
+  </script>
+</body>
+</html>
