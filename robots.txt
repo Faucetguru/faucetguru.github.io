@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /*/index.html$
+Disallow: /*index.html$
 Sitemap: https://faucetguru.github.io/sitemap.xml
