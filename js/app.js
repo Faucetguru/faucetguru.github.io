@@ -310,7 +310,7 @@ function showBet() {
         </div>
     `;
     
-    fetch('bet/index.html')
+    fetch('bet/')
         .then(response => {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             return response.text();
