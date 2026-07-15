@@ -34,6 +34,15 @@ function safeUrl(url) {
     return '#';
 }
 
+// For card background images: allow both absolute https and local relative paths (img/xxx.jpg)
+function safeImg(url) {
+    const raw = String(url ?? '').trim();
+    if (!raw || raw === '#' || raw.includes('TU_ID')) return '#';
+    if (/^https?:\/\//i.test(raw)) return raw;
+    if (/^(?:img|blog\/img)\//.test(raw) || raw.startsWith('/')) return raw;
+    return '#';
+}
+
 function stars(score) {
     const safeScore = Number.isFinite(Number(score)) ? Number(score) : 0;
     return '★'.repeat(Math.max(0, Math.floor(safeScore)));
@@ -142,7 +151,12 @@ function renderList(data) {
     data.forEach(faucet => {
         const card = document.createElement('div');
         card.className = 'faucet-card';
+        const bg = safeImg(faucet.image);
+        const bgStyle = bg && bg !== '#'
+            ? `style="background-image: linear-gradient(rgba(10,11,16,0.82), rgba(10,11,16,0.92)), url('${escapeHtml(bg)}');"`
+            : '';
         card.innerHTML = `
+            <div class="card-bg" ${bgStyle}></div>
             <span class="card-tag">${escapeHtml(faucet.type)}</span>
             <h3 class="card-title">${escapeHtml(faucet.name)}</h3>
             <div class="trust-badge">

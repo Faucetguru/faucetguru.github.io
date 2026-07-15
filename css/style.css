@@ -177,6 +177,27 @@ nav {
     overflow: hidden;
 }
 
+.faucet-card > *:not(.card-bg) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Real-site screenshot background (set inline via JS) */
+.card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center top;
+    z-index: 0;
+    opacity: 0.55;
+    transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.faucet-card:hover .card-bg {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
 .faucet-card:hover {
     background: var(--bg-card-hover);
     border-color: var(--primary);
