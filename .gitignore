@@ -5,3 +5,5 @@ site-status-weekly.md
 *.pyc
 __pycache__/
 *.log
+secrets/
+.venv-research/
