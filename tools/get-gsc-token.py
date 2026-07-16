@@ -1,58 +1,68 @@
 #!/usr/bin/env python3
-"""
-Generar token OAuth para Google Search Console API (GSC) - sin navegador.
-
-Requiere:
-  - tools/credentials.json  (OAuth client, tipo 'installed')
-  - google-auth-oauthlib instalado en el venv de research
+"""Generar token OAuth para Google Search Console API (GSC) - flujo PKCE.
 
 Uso:
-  source .venv-research/bin/activate
-  python3 tools/get-gsc-token.py
-  -> imprime URL de autorizacion -> abrir en navegador -> pegar codigo -> token guardado
+  uv run python tools/get-gsc-token.py            -> imprime URL de auth (guarda verifier)
+  uv run python tools/get-gsc-token.py exchange  -> lee tools/_gsc_code.txt y guarda token
 
-El token se guarda en tools/token_gsc.pickle (chmod 600). Luego research-topics.py
-puede leerlo para consultar la Search Console API (searchanalytics).
-
-NOTA: el usuario debe autorizar en el navegador (flujo OAuth). El script solo
-prepara la URL y guarda el token; no puede completar el consentimiento solo.
+El usuario abre la URL, autoriza, pega el codigo en tools/_gsc_code.txt
+(y avisa), y se corre el exchange. El verifier se guarda en tools/_gsc_verifier.txt.
 """
-import os
-import pickle
+import os, sys, pickle, base64, hashlib, json, urllib.parse, urllib.request
 
-try:
-    from google_auth_oauthlib.flow import InstalledAppFlow
-except ImportError:
-    raise SystemExit("Instala: uv pip install --python .venv-research google-auth-oauthlib")
-
-# Scope de SOLO LECTURA de Search Console (suficiente para searchanalytics)
-SCOPES = ['https://www.googleapis.com/auth/webmasters.readonly']
+SCOPES = ['https://www.googleapis.com/auth/webmasters']
 CREDENTIALS_FILE = 'tools/credentials.json'
 TOKEN_FILE = 'tools/token_gsc.pickle'
+VERIFIER_FILE = 'tools/_gsc_verifier.txt'
+CODE_FILE = 'tools/_gsc_code.txt'
 REDIRECT_URI = 'http://localhost'
 
 
-def main():
-    flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_FILE, SCOPES)
-    flow.redirect_uri = REDIRECT_URI
-    auth_url, _ = flow.authorization_url(prompt='consent', access_type='offline')
-
+def gen_url():
+    c = json.load(open(CREDENTIALS_FILE))['installed']
+    verifier = base64.urlsafe_b64encode(os.urandom(64)).rstrip(b'=').decode('ascii')
+    challenge = base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).rstrip(b'=').decode()
+    open(VERIFIER_FILE, 'w').write(verifier)
+    params = {
+        'response_type': 'code', 'client_id': c['client_id'], 'redirect_uri': REDIRECT_URI,
+        'scope': SCOPES[0], 'prompt': 'consent', 'access_type': 'offline',
+        'code_challenge': challenge, 'code_challenge_method': 'S256',
+    }
+    url = 'https://accounts.google.com/o/oauth2/auth?' + urllib.parse.urlencode(params)
+    open('tools/_gsc_auth_url.txt', 'w').write(url)
     print("=== AUTORIZACION REQUERIDA ===")
-    print(f"Abrí esta URL en tu navegador y autoriza el acceso a Search Console:\n\n{auth_url}\n")
-    print("Luego pega el codigo de autorizacion (o la URL completa de redireccion) aqui:")
-    code = input().strip()
+    print(url)
+    print("\nPega el codigo (o URL de redireccion) en tools/_gsc_code.txt y avisa.")
 
-    # Acepta tanto el codigo como la URL completa de redireccion
-    if "code=" in code:
-        code = code.split("code=", 1)[1].split("&")[0]
 
-    creds = flow.fetch_token(code=code)
-    with open(TOKEN_FILE, 'wb') as token:
-        pickle.dump(creds, token)
+def do_exchange():
+    c = json.load(open(CREDENTIALS_FILE))['installed']
+    verifier = open(VERIFIER_FILE).read().strip()
+    raw = open(CODE_FILE).read().strip()
+    if 'code=' in raw:
+        raw = raw.split('code=', 1)[1].split('&')[0]
+    data = {
+        'code': raw, 'client_id': c['client_id'], 'client_secret': c['client_secret'],
+        'redirect_uri': REDIRECT_URI,
+        'grant_type': 'authorization_code', 'code_verifier': verifier,
+    }
+    req = urllib.request.Request(
+        'https://oauth2.googleapis.com/token',
+        urllib.parse.urlencode(data).encode(),
+        {'Content-Type': 'application/x-www-form-urlencoded'})
+    r = json.loads(urllib.request.urlopen(req).read())
+    from google.oauth2.credentials import Credentials
+    creds = Credentials(
+        token=r['access_token'], refresh_token=r.get('refresh_token'),
+        token_uri='https://oauth2.googleapis.com/token', client_id=c['client_id'],
+        client_secret=c['client_secret'], scopes=SCOPES)
+    pickle.dump(creds, open(TOKEN_FILE, 'wb'))
     os.chmod(TOKEN_FILE, 0o600)
-    print(f"\nToken GSC guardado en {TOKEN_FILE}")
-    print("Ahora research-topics.py puede usar GSC.")
+    print(f"Token GSC guardado en {TOKEN_FILE}; refresh: {bool(r.get('refresh_token'))}")
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    if len(sys.argv) > 1 and sys.argv[1] == 'exchange':
+        do_exchange()
+    else:
+        gen_url()

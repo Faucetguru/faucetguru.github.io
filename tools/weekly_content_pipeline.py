@@ -9,7 +9,12 @@ Flujo completo que corre el cron cada semana:
   anchors   -> remove-anchors.py (texto plano, regla del usuario)
   publish   -> publish_to_blogger.py (INSERT/UPDATE via API, 1 a la vez)
   index     -> regenera blog/posts/index.html (fg/blog)
+  sitemap   -> regenera sitemap.xml (todos los posts) + lo envia a Google (GSC API)
   kanban    -> mueve el item a 'publicado'
+
+NOTA: los posts se publican CON links (Blogger API acepta <a href>).
+No se usa remove-anchors.
+
 
 Uso (lo llama el cron con el modo segun corresponda):
   python3 tools/weekly_content_pipeline.py --mode research --email NONE
@@ -112,6 +117,44 @@ def regenerate_index():
     (POSTS / "index.html").write_text(index, encoding="utf-8")
     print(f"  Indice regenerado ({len(posts)} posts)")
 
+def regenerate_sitemap():
+    """Reconstruye sitemap.xml con todas las URLs reales (incluye posts)."""
+    import glob as _glob
+    BASE = "https://faucetguru.github.io"
+    urls = [BASE + "/", BASE + "/blog/", BASE + "/bet/", BASE + "/blog/posts/index.html"]
+    for f in sorted(_glob.glob(str(POSTS / "*.html"))):
+        name = Path(f).name
+        if name == "index.html":
+            continue
+        urls.append(f"{BASE}/blog/posts/{name}")
+    from xml.sax.saxutils import escape as _esc
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for u in urls:
+        xml += f"  <url><loc>{_esc(u)}</loc></url>\n"
+    xml += "</urlset>\n"
+    (ROOT / "sitemap.xml").write_text(xml, encoding="utf-8")
+    print(f"  Sitemap regenerado ({len(urls)} urls)")
+
+def submit_sitemap():
+    """Envía sitemap.xml a Google via Search Console API (token GSC, scope escritura)."""
+    import pickle
+    from googleapiclient.discovery import build
+    from google.oauth2.credentials import Credentials
+    tok = TOOLS / "token_gsc.pickle"
+    if not tok.exists():
+        print("  submit_sitemap WARN: token_gsc.pickle ausente, salteo")
+        return
+    try:
+        creds = pickle.load(open(tok, "rb"))
+        svc = build("webmasters", "v3", credentials=creds)
+        SITE = "https://faucetguru.github.io/"
+        FEED = "https://faucetguru.github.io/sitemap.xml"
+        svc.sitemaps().submit(siteUrl=SITE, feedpath=FEED).execute()
+        print("  Sitemap enviado a Google (GSC)")
+    except Exception as e:
+        print(f"  submit_sitemap WARN: {str(e)[:150]}")
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=["research", "publish"], required=True)
@@ -163,15 +206,20 @@ def main():
         print("  Blogger FAIL:", p.stderr[-300:]); sys.exit(1)
 
     # index fg/blog
-    print("[3/4] Regenerando indice fg/blog...")
+    print("[3/6] Regenerando indice fg/blog...")
     regenerate_index()
 
+    # sitemap + enviar a Google
+    print("[4/6] Regenerando sitemap.xml y enviando a Google...")
+    regenerate_sitemap()
+    submit_sitemap()
+
     # kanban (trazabilidad; el tablero se queda)
-    print("[4/5] Kanban...")
+    print("[5/6] Kanban...")
     move_kanban(tema, "publicado")
 
     # git commit + push a main (gh-pages se sirve desde ahi; deploy aparte)
-    print("[5/5] Git commit + push (main)...")
+    print("[6/6] Git commit + push (main)...")
     try:
         subprocess.run(["git", "add", "-A"], cwd=ROOT, check=True)
         subprocess.run(["git", "commit", "--no-gpg-sign", "-m",
