@@ -3,9 +3,12 @@
 Flujo: `ideas` → `investigando` → `escribiendo` → `listo-mail` → `publicado`
 
 Reglas:
-- 1 post por semana (cron domingo 10:00).
-- El agente investiga BAJA competencia, escribe en criollo AR, valida SEO, manda por mail.
-- VOS confirmás por mail → el agente publica a Blogger (1 a la vez, sin lotes).
+- 1 post por semana (cron domingo 10:00, job `66a0ceae9771`).
+- El agente investiga BAJA competencia (research-topics.py + cache), escribe en
+  criollo AR, valida SEO, quita anchors, publica a Blogger via API (1 a la vez),
+  regenera blog/posts/index.html, commitea a main (--no-gpg-sign).
+- Sin mail: publica directo. Blog = cryptofuente.blogspot.com. fg/blog = repo main.
+- gh-pages se sirve desde main (deploy aparte).
 - Para agregar temas/sitios: ponelos en `ideas` con `- [ ] TEMA`.
 
 ## ideas
@@ -18,7 +21,7 @@ Reglas:
 - [ ] (en redacción)
 
 ## listo-mail
-- [ ] (escrito + SEO ok + anchors quitados, esperando tu confirmación por mail)
+- [ ] (ya no usamos mail; flujo directo a Blogger)
 
 ## publicado
-- [ ] (confirmado por vos y subido a Blogger)
+- [ ] faucet crypto argentina _(BAJA/DESCONOCIDA, publicado 2026-07-16)_
