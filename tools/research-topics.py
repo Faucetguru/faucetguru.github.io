@@ -195,9 +195,11 @@ def main():
         if i < len(seeds) - 1:
             time.sleep(4)
 
-    # Backlog priorizado: BAJA primero, luego MEDIA
+    # Backlog priorizado: BAJA primero, luego MEDIA, luego DESCONOCIDA
+    # (DESCONOCIDA = no se detectaron grandes dominios en el SERP = hueco de
+    #  contenido = oportunidad, la tratamos como prioridad alta si no hay BAJA/MEDIA)
     order = {"BAJA": 0, "MEDIA": 1, "DESCONOCIDA": 2, "ALTA": 3}
-    backlog = sorted([r for r in results if r["competition"] in ("BAJA", "MEDIA")],
+    backlog = sorted([r for r in results if r["competition"] in ("BAJA", "MEDIA", "DESCONOCIDA")],
                      key=lambda r: (order[r["competition"]], r["big_pct"]))
 
     print(f"\n=== BACKLOG DE BAJA COMPETENCIA ({len(backlog)}) ===")
