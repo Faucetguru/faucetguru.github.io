@@ -1,5 +1,6 @@
 node_modules/
 venv/
+.venv/
 .DS_Store
 site-status-weekly.md
 *.pyc
@@ -7,3 +8,16 @@ __pycache__/
 *.log
 secrets/
 .venv-research/
+
+# --- Secretos (NUNCA commitear) ---
+tools/credentials.json
+tools/token.pickle
+tools/.oauth_verifier.json
+*.pickle
+secrets/
+
+# --- Temporales de runtime del pipeline semanal ---
+tools/_weekly_context.json
+tools/_weekly_research.json
+tools/_backlog_cache.json
+.research/

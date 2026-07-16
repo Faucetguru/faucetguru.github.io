@@ -148,33 +148,30 @@ def main():
         print(f"El post {post_path.name} no existe. El agente debe escribirlo."); sys.exit(1)
 
     # validate (exit 0 = pasa; solo errores bloquean, advertencias ok)
-    print("[1/5] Validando SEO...")
+    print("[1/4] Validando SEO...")
     v = run([str(TOOLS / "validate-seo-posts.py"), str(post_path)])
     if v.returncode != 0:
         print("SEO FAIL:", (v.stdout or v.stderr)[-300:]); sys.exit(1)
     print("  SEO OK (con posibles advertencias)")
+    print("  Links: se publican tal cual (Blogger API acepta <a href>)")
 
-    # anchors
-    print("[2/5] Quitando anchors...")
-    run([str(TOOLS / "remove-anchors.py")])
-
-    # publish blogger
-    print("[3/5] Publicando a Blogger (API)...")
+    # publish blogger (con links, sin remover anchors)
+    print("[2/4] Publicando a Blogger (API)...")
     p = run([str(TOOLS / "publish_to_blogger.py"), slug])
     print("  " + p.stdout.strip().replace("\n", "\n  "))
     if p.returncode != 0:
         print("  Blogger FAIL:", p.stderr[-300:]); sys.exit(1)
 
     # index fg/blog
-    print("[4/5] Regenerando indice fg/blog...")
+    print("[3/4] Regenerando indice fg/blog...")
     regenerate_index()
 
-    # kanban
-    print("[5/5] Kanban...")
+    # kanban (trazabilidad; el tablero se queda)
+    print("[4/5] Kanban...")
     move_kanban(tema, "publicado")
 
     # git commit + push a main (gh-pages se sirve desde ahi; deploy aparte)
-    print("[6/6] Git commit + push (main)...")
+    print("[5/5] Git commit + push (main)...")
     try:
         subprocess.run(["git", "add", "-A"], cwd=ROOT, check=True)
         subprocess.run(["git", "commit", "--no-gpg-sign", "-m",
