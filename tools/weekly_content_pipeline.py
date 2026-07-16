@@ -87,7 +87,7 @@ def regenerate_index():
         title = re.sub(r"\s+", " ", m.group(1)).strip() if m else p.stem
         posts.append((p.stem, title))
     items = "\n".join(
-        f'      <div class="post-entry">\n        <a href="{slug}.html">{title}</a>\n      </div>' for slug, title in posts
+        f'      <div class="post-entry">\n        <a href="/blog/posts/{slug}.html">{title}</a>\n      </div>' for slug, title in posts
     )
     index = f"""<!DOCTYPE html>
 <html lang="es-419">
