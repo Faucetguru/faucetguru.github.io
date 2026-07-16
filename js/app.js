@@ -209,7 +209,7 @@ function showDetail(faucet) {
                 <a href="${escapeHtml(referral)}" target="_blank" rel="noopener noreferrer" class="cta-btn">¡Regístrate y Gana Ahora!</a>
             </div>
             <div class="screenshot-container">
-                <img src="${escapeHtml(safeUrl(faucet.image))}" alt="${escapeHtml(faucet.name)}" style="width:100%; height:100%; object-fit: cover; border-radius: 20px;">
+                <img src="${escapeHtml(safeImg(faucet.image))}" alt="${escapeHtml(faucet.name)}" style="width:100%; height:100%; object-fit: cover; border-radius: 20px;">
             </div>
         </div>
 
