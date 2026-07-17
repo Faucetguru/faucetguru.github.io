@@ -1,0 +1,1 @@
+https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=808020215292-t0p0pom417l5bm367amk5j5gm6pk3d4l.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fwebmasters.readonly&prompt=consent&access_type=offline&code_challenge=AEgH3eDgYfEtVpXGdU8ITHyKlXwqDRsUT7AdT4CBhic&code_challenge_method=S256
