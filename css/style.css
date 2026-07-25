@@ -365,6 +365,7 @@ nav {
     font-size: 0.85rem;
     color: var(--text-dim);
     line-height: 1.4;
+    text-align: right;
 }
 
 .strategy-section {
@@ -458,6 +459,11 @@ footer {
     }
     .card-title {
         font-size: 1.2rem;
+    }
+    .card-comment {
+        font-size: 0.78rem;
+        padding: 6px 8px;
+        margin-bottom: 8px;
     }
     .detail-header {
         grid-template-columns: 1fr;
