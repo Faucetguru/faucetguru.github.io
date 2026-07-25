@@ -8,6 +8,7 @@ window.faucetsData = [
         summary: "La faucet más antigua y confiable del mercado. Ofrece loterías, apuestas y ahorros.",
         referralLink: "https://freebitco.in/?r=8850009",
         image: "img/freebitco.jpg",
+        comment: "📌 La más antigua del ecosistema. Funciona desde 2013. Ideal para empezar a acumular BTC con cero riesgo. La sección 'Multiply BTC' es opcional — no inviertas más de lo que pierdes.",
         strategies: "Usa el modo 'Multiply BTC' con la estrategia Martingala suave para maximizar puntos RP.",
         script: "// Script básico para Auto-Roll\nsetInterval(() => {\n  const button = document.querySelector('#free_play_form_button');\n  if (button && button.display !== 'none') button.click();\n}, 600000);",
         reviews: [
@@ -24,6 +25,7 @@ window.faucetsData = [
         summary: "Simulador de minería virtual donde juegas mini-juegos para ganar poder de minado real.",
         referralLink: "https://rollercoin.com/?r=mjsn8xfw",
         image: "img/rollercoin.jpg",
+        comment: "🎮 El minado es real pero lento — depende de los juegos que juegues. Funciona mejor si ya sos gamer. No inviertas dinero real; todo es virtual.",
         strategies: "Juega al menos 50 juegos al día para mantener tu PC al máximo nivel (Level 4).",
         script: "N/A - Se recomienda juego manual para evitar ban.",
         reviews: [
@@ -40,6 +42,7 @@ window.faucetsData = [
         summary: "Una de las faucets mejor valoradas. Múltiples formas de ganar: Faucet (cada 4 min), PTC, Shortlinks y Offerwalls.",
         referralLink: "https://viefaucet.com?r=695319a6a769fff7e0ca7622",
         image: "img/viefaucet.jpg",
+        comment: "⭐ Muy completa — faucet + PTC + shortlinks + offerwalls. El bono diario se activa cada 24h. Mejor usarla como fuente principal por la diversidad de métodos.",
         strategies: "Usa el bono diario cada 24h para multiplicar tus ganancias de la faucet manual.",
         script: "setInterval(() => { console.log('Ready to claim?'); }, 240000);",
         reviews: [
@@ -131,6 +134,7 @@ window.faucetsData = [
         summary: "Micro-billetera y faucet que permite recolectar múltiples criptomonedas en un solo lugar.",
         referralLink: "https://faucetwallet.io/?ref=ICHZHYMS",
         image: "img/faucet_wallet.jpg",
+        comment: "🎒 Centraliza tus pequeños reclamos en una sola billetera. Ideal si usás varias faucets — evita pagar min fees por cada retiro chiquito.",
         strategies: "Centraliza tus pequeños reclamos aquí para llegar más rápido al mínimo de retiro.",
         script: "N/A",
         reviews: [
@@ -194,7 +198,7 @@ window.faucetsData = [
     { id: "autofaucet_dutchycorp", name: "Autofaucet DutchyCorp", type: "autofaucet", trustScore: 3.3, bonus: "", summary: "PTC/auto-claim wall provisto en DutchyCorp (PTC/Wall).", referralLink: "https://autofaucet.dutchycorp.space/?r=plk666", image: "img/autofaucet_dutchycorp.jpg", strategies: "Revisar reglas y límites del wall para evitar bloqueos.", script: "N/A", reviews: [] },
     { id: "freetron", name: "FreeTRON", type: "faucet", trustScore: 3.1, bonus: "", summary: "Faucet TRON — revisar pagos y reputación antes de usar intensivamente.", referralLink: "https://freetron.in?ref=44tvfM78BS", image: "img/freetron.jpg", strategies: "Usarlo como complemento a otras faucets TRON.", script: "N/A", reviews: [] },
     { id: "wipter", name: "Wipter", type: "service", trustScore: 3.4, bonus: "", summary: "Plataforma con registro / servicios (en el bookmark aparece página de registro).", referralLink: "https://wipter.com/es/register/success", image: "img/wipter.jpg", strategies: "Completar perfil y mejoras para acceder a ofertas.", script: "N/A", reviews: [] },
-    { id: "ltcminer", name: "LTCMiner", type: "mining", trustScore: 1.0, bonus: "", summary: "Servicio de cloud mining de Litecoin (ltcminer.com). Estafa confirmada: los retiros están condicionados a traer referidos y los retornos prometidos son irreales. No depositar.", referralLink: "https://ltcminer.com/1424800", image: "img/ltcminer.jpg", strategies: "Evitar cualquier depósito. El retiro queda bloqueado hasta referir usuarios (esquema Ponzi).", script: "N/A", reviews: [] },
+    { id: "ltcminer", name: "LTCMiner", type: "mining", trustScore: 1.0, bonus: "", summary: "Servicio de cloud mining de Litecoin (ltcminer.com). Estafa confirmada: los retiros están condicionados a traer referidos y los retornos prometidos son irreales. No depositar.", referralLink: "https://ltcminer.com/1424800", image: "img/ltcminer.jpg", comment: "🚨 ESTAFA — no deposites nada. Los retiros se bloquean hasta que traigas referidos (esquema Ponzi). Reportada como estafa por múltiples usuarios.", strategies: "Evitar cualquier depósito. El retiro queda bloqueado hasta referir usuarios (esquema Ponzi).", script: "N/A", reviews: [] },
     { id: "top69cryptocasinos", name: "TOP69 Crypto Casinos", type: "affiliate", trustScore: 3.5, bonus: "", summary: "Sitio de reseñas/afiliados para casinos cripto.", referralLink: "https://top69cryptocasinos.com/review/coincasino/", image: "img/top69cryptocasinos.jpg", strategies: "Usar solo casinos con buena reputación.", script: "N/A", reviews: [] },
     { id: "abcmining", name: "ABC Mining", type: "cloud_mining", trustScore: 2.9, bonus: "", summary: "Panel de mining/withdraw, revisar confiabilidad antes de invertir.", referralLink: "https://user.abcmining.pro/user/withdraw", image: "img/abcmining.jpg", strategies: "Evitar inversiones grandes sin evidencia de pagos.", script: "N/A", reviews: [] },
     { id: "coinpayu", name: "Coinpayu", type: "ptc", trustScore: 3.6, bonus: "", summary: "Plataforma PTC y tareas para ganar criptomonedas.", referralLink: "https://www.coinpayu.com/?r=Elsen1991", image: "img/coinpayu.jpg", strategies: "Selecciona ofertas/ads con mejores pagos por tiempo invertido.", script: "N/A", reviews: [] },

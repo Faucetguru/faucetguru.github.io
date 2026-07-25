@@ -164,6 +164,7 @@ function renderList(data) {
                 <span>${escapeHtml(faucet.trustScore)}</span>
             </div>
             <div class="card-bonus">${escapeHtml(faucet.bonus)}</div>
+            ${faucet.comment ? `<div class="card-comment">💬 ${escapeHtml(faucet.comment.substring(0, 100))}${faucet.comment.length > 100 ? '…' : ''}</div>` : ''}
             <p style="color: var(--text-dim); font-size: 0.9rem;">${escapeHtml(String(faucet.summary || '').substring(0, 80))}...</p>
         `;
         card.onclick = () => showDetail(faucet);
@@ -192,6 +193,15 @@ function showDetail(faucet) {
           `
         : '';
 
+    const commentHtml = faucet.comment
+        ? `
+            <div class="commentary-section">
+                <h3><span style="color: var(--accent-orange);">💬</span> Comentario</h3>
+                <p>${escapeHtml(faucet.comment)}</p>
+            </div>
+          `
+        : '';
+
     faucetDetail.innerHTML = `
         <button class="back-btn" id="back-to-list">← Volver al listado</button>
         <div class="detail-header">
@@ -212,6 +222,8 @@ function showDetail(faucet) {
                 <img src="${escapeHtml(safeImg(faucet.image))}" alt="${escapeHtml(faucet.name)}" style="width:100%; height:100%; object-fit: cover; border-radius: 20px;">
             </div>
         </div>
+
+        ${commentHtml}
 
         <div class="strategy-section">
             <h3>Estrategia Recomendada</h3>
