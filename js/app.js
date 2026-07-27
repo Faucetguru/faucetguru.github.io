@@ -202,6 +202,47 @@ function showDetail(faucet) {
           `
         : '';
 
+    // Comments section (user comments from Supabase)
+    const commentsSectionHtml = `
+        <div class="comments-section" id="comments-section">
+            <h3>💬 Comentarios de Usuarios</h3>
+            <div id="comments-list" class="comments-list">Cargando comentarios...</div>
+            
+            <!-- Add Comment Form -->
+            <div class="comment-form-section">
+                <h4>Deja tu opinión</h4>
+                <form id="comment-form" class="comment-form">
+                    <div class="form-group">
+                        <label for="comment-name">Tu nombre <span class="required">*</span></label>
+                        <input type="text" id="comment-name" name="name" required maxlength="50" placeholder="Ej: CriptoJuan" />
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-email">Email (opcional, para notificaciones)</label>
+                        <input type="email" id="comment-email" name="email" maxlength="100" placeholder="tu@email.com" />
+                    </div>
+                    <div class="form-group">
+                        <label>Tu calificación</label>
+                        <div class="star-rating" id="comment-rating">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                            <input type="hidden" name="rating" id="comment-rating-value" value="0" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-text">Comentario <span class="required">*</span></label>
+                        <textarea id="comment-text" name="comment" required maxlength="2000" rows="4" placeholder="Compartí tu experiencia... ¿Paga bien? ¿Es confiable? ¿Trucos?"></textarea>
+                        <small class="char-count"><span id="comment-char-count">0</span>/2000 caracteres</small>
+                    </div>
+                    <button type="submit" class="submit-comment-btn">💬 Publicar comentario</button>
+                </form>
+                <div id="comment-form-message" class="form-message"></div>
+            </div>
+        </div>
+    `;
+
     faucetDetail.innerHTML = `
         <button class="back-btn" id="back-to-list">← Volver al listado</button>
         <div class="detail-header">
@@ -232,16 +273,33 @@ function showDetail(faucet) {
         </div>
 
         <div style="margin-top: 40px;">
-            <h3>Opiniones de Usuarios</h3>
+            <h3>Opiniones de Usuarios (Reseñas)</h3>
             ${reviewsHtml}
         </div>
+
+        ${commentsSectionHtml}
     `;
 
     document.getElementById('back-to-list').onclick = () => {
         faucetDetail.classList.add('hidden');
         hero.classList.remove('hidden');
         faucetList.classList.remove('hidden');
+        // Preserve active filter
+        const activeBtn = navLinks.querySelector('.nav-btn.active');
+        if (activeBtn) {
+            const filter = activeBtn.dataset.filter;
+            const filteredData = filter === 'all' ? faucets : faucets.filter(f => f.type === filter);
+            renderList(filteredData);
+        } else {
+            renderList(faucets);
+        }
     };
+
+    // Load comments from Supabase
+    loadComments(faucet.id);
+    
+    // Setup comment form
+    setupCommentForm(faucet.id);
 }
 
 function setupEventListeners() {
@@ -365,6 +423,163 @@ function showBet() {
         hero.classList.remove('hidden');
         faucetList.classList.remove('hidden');
     };
+}
+
+// ============================================
+// COMMENT SYSTEM FUNCTIONS (Supabase)
+// ============================================
+
+let currentCommentRating = 0;
+
+async function loadComments(faucetId) {
+    const commentsList = document.getElementById('comments-list');
+    if (!commentsList) return;
+    
+    if (!window.SupabaseComments || !window.SupabaseComments.fetchComments) {
+        commentsList.innerHTML = '<p style="color: var(--text-dim); text-align: center; padding: 20px;">Sistema de comentarios no configurado. Configura Supabase en <code>js/supabase-client.js</code></p>';
+        return;
+    }
+    
+    try {
+        commentsList.innerHTML = '<p style="text-align: center; color: var(--text-dim);">Cargando comentarios...</p>';
+        
+        const comments = await window.SupabaseComments.fetchComments(faucetId);
+        
+        if (comments.length === 0) {
+            commentsList.innerHTML = '<p style="text-align: center; color: var(--text-dim); padding: 20px;">Sé el primero en comentar 👇</p>';
+            return;
+        }
+        
+        commentsList.innerHTML = comments.map(comment => `
+            <div class="comment-item" data-comment-id="${escapeHtml(comment.id)}">
+                <div class="comment-header">
+                    <span class="comment-author">${escapeHtml(comment.user_name)}</span>
+                    <span class="comment-date">${window.SupabaseComments.formatCommentDate(comment.created_at)}</span>
+                </div>
+                <div class="comment-rating">
+                    ${'★'.repeat(comment.rating || 0)}${'☆'.repeat(5 - (comment.rating || 0))}
+                </div>
+                <div class="comment-text">${escapeHtml(comment.text)}</div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading comments:', error);
+        commentsList.innerHTML = '<p style="color: var(--accent-orange); text-align: center;">Error cargando comentarios</p>';
+    }
+}
+
+function setupCommentForm(faucetId) {
+    const form = document.getElementById('comment-form');
+    if (!form) return;
+    
+    // Star rating interaction
+    const stars = document.querySelectorAll('#comment-rating .star');
+    const ratingInput = document.getElementById('comment-rating-value');
+    
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            currentCommentRating = parseInt(star.dataset.value);
+            ratingInput.value = currentCommentRating;
+            updateStarDisplay(stars, currentCommentRating);
+        });
+        
+        star.addEventListener('mouseenter', () => {
+            updateStarDisplay(stars, parseInt(star.dataset.value), true);
+        });
+        
+        star.addEventListener('mouseleave', () => {
+            updateStarDisplay(stars, currentCommentRating, false);
+        });
+    });
+    
+    // Character counter
+    const textarea = document.getElementById('comment-text');
+    const charCount = document.getElementById('comment-char-count');
+    
+    textarea.addEventListener('input', () => {
+        charCount.textContent = textarea.value.length;
+    });
+    
+    // Form submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = form.querySelector('.submit-comment-btn');
+        const messageDiv = document.getElementById('comment-form-message');
+        
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const text = form.comment.value.trim();
+        const rating = currentCommentRating;
+        
+        if (!name || !text) {
+            showFormMessage(messageDiv, 'Por favor completá tu nombre y comentario', 'error');
+            return;
+        }
+        
+        if (rating === 0) {
+            showFormMessage(messageDiv, 'Por favor seleccioná una calificación (estrellas)', 'error');
+            return;
+        }
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Publicando...';
+        messageDiv.textContent = '';
+        messageDiv.className = 'form-message';
+        
+        try {
+            if (!window.SupabaseComments || !window.SupabaseComments.postComment) {
+                throw new Error('Sistema de comentarios no configurado');
+            }
+            
+            const result = await window.SupabaseComments.postComment(faucetId, text, name);
+            
+            if (result.error) {
+                throw new Error(result.error);
+            }
+            
+            showFormMessage(messageDiv, '¡Comentario publicado! 🎉', 'success');
+            form.reset();
+            currentCommentRating = 0;
+            ratingInput.value = '0';
+            updateStarDisplay(stars, 0, false);
+            charCount.textContent = '0';
+            
+            // Reload comments to show the new one
+            await loadComments(faucetId);
+            
+        } catch (error) {
+            console.error('Error posting comment:', error);
+            showFormMessage(messageDiv, `Error: ${error.message}`, 'error');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '💬 Publicar comentario';
+        }
+    });
+}
+
+function updateStarDisplay(stars, rating, isHover = false) {
+    stars.forEach(star => {
+        const value = parseInt(star.dataset.value);
+        if (value <= rating) {
+            star.classList.add('active');
+            star.style.color = '#ffd700';
+        } else {
+            star.classList.remove('active');
+            star.style.color = isHover ? '#444' : 'var(--text-dim)';
+        }
+    });
+}
+
+function showFormMessage(div, message, type) {
+    div.textContent = message;
+    div.className = `form-message ${type}`;
+    if (type === 'success') {
+        setTimeout(() => {
+            div.textContent = '';
+            div.className = 'form-message';
+        }, 5000);
+    }
 }
 
 init();
