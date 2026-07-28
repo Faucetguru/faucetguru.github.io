@@ -75,41 +75,41 @@ async function initVisitCounter() {
     const counterEl = document.getElementById('visit-count');
     if (!counterEl) return;
 
-    // Local storage based visit counter (Option 2 fallback)
-    const STORAGE_KEY = 'faucetguru-visits';
     const LOCAL_KEY = 'faucetguru-local-count';
     const SESSION_KEY = 'faucetguru-session-counted';
-    
-    // Try external API first
-    try {
-        const endpoint = 'https://api.countapi.xyz/hit/faucetguru.github.io/visits';
-        const response = await fetch(endpoint);
-        if (response.ok) {
-            const data = await response.json();
-            const value = Number(data.value);
-            if (Number.isFinite(value)) {
-                // Sync local storage with global count
-                localStorage.setItem(LOCAL_KEY, value.toString());
-                localStorage.setItem(SESSION_KEY, 'true');
-                counterEl.textContent = value.toLocaleString();
-                return;
+    let loaded = false;
+
+    const setCount = (value) => {
+        if (!Number.isFinite(value)) return;
+        counterEl.textContent = `${Number(value).toLocaleString()} visitas`;
+        counterEl.style.visibility = 'visible';
+        loaded = true;
+    };
+
+    const tryGenerate = async () => {
+        if (loaded) return;
+        try {
+            const endpoint = 'https://api.countapi.xyz/hit/faucetguru.github.io/visits';
+            const response = await fetch(endpoint);
+            if (response.ok) {
+                const data = await response.json();
+                const value = Number(data.value);
+                if (Number.isFinite(value) && value >= 0) {
+                    localStorage.setItem(LOCAL_KEY, String(value));
+                    localStorage.setItem(SESSION_KEY, 'true');
+                    setCount(value);
+                    return;
+                }
             }
+            throw new Error('countapi unavailable');
+        } catch (error) {
+            setTimeout(() => {
+                if (!loaded) tryGenerate();
+            }, 3000);
         }
-        throw new Error('countapi error');
-    } catch (error) {
-        // Fallback to localStorage-based counting
-        let localCount = Number(localStorage.getItem(LOCAL_KEY) || '0');
-        const sessionCounted = localStorage.getItem(SESSION_KEY);
-        
-        // Increment only once per session
-        if (!sessionCounted) {
-            localCount++;
-            localStorage.setItem(LOCAL_KEY, localCount.toString());
-            localStorage.setItem(SESSION_KEY, 'true');
-        }
-        
-        counterEl.textContent = `${localCount.toLocaleString()} visitas`;
-    }
+    };
+
+    tryGenerate();
 }
 
 window.addEventListener('load', () => {
@@ -166,6 +166,12 @@ function renderList(data) {
             <div class="card-bonus">${escapeHtml(faucet.bonus)}</div>
             ${faucet.comment ? `<div class="card-comment">💬 ${escapeHtml(faucet.comment.substring(0, 100))}${faucet.comment.length > 100 ? '…' : ''}</div>` : ''}
             <p style="color: var(--text-dim); font-size: 0.9rem;">${escapeHtml(String(faucet.summary || '').substring(0, 80))}...</p>
+            ${(() => {
+                const slug = String(faucet.id || '').replace(/_/g, '-').trim();
+                if (!slug) return '';
+                const href = `/blog/posts/${slug}-reseña.html`;
+                return `<p style="margin-top:12px;"><a class="card-blog-link" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">📝 Entrada del blog</a></p>`;
+            })()}
         `;
         card.onclick = () => showDetail(faucet);
         faucetList.appendChild(card);
@@ -347,9 +353,60 @@ function showBlog() {
     faucetDetail.innerHTML = `
         <button class="back-btn" id="back-to-main">← Volver a Faucets</button>
         <div id="blog-container" style="max-width: 900px; margin: 0 auto;">
+            <h2 style="margin-bottom: 8px;">Blog</h2>
+            <input type="search" id="blog-search" placeholder="Buscar posts..." autocomplete="off" style="
+                width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #2b2d3a;
+                background: #10111a; color: #e6e9f0;
+                outline: none; font-size: 1rem;
+            ">
+            <div id="blog-search-results" style="
+                margin-top: 10px; display: none;
+                background: #11131f; border: 1px solid #2b2d3a; border-radius: 12px;
+                max-height: 260px; overflow-y: auto;
+            "></div>
             <p style="text-align: center; color: var(--text-dim);">Cargando blog...</p>
         </div>
     `;
+    
+    document.getElementById('blog-search').addEventListener('input', (event) => {
+        const query = String(event.target.value || '').trim().toLowerCase();
+        const resultsBox = document.getElementById('blog-search-results');
+        if (!currentBlogPosts.length) {
+            resultsBox.style.display = 'none';
+            return;
+        }
+
+        if (!query) {
+            resultsBox.style.display = 'none';
+            return;
+        }
+
+        const matches = currentBlogPosts.filter(post =>
+            (post.title || '').toLowerCase().includes(query)
+        );
+
+        if (!matches.length) {
+            resultsBox.innerHTML = `<div style="padding:12px 14px; color: var(--text-dim);">Sin resultados</div>`;
+            resultsBox.style.display = 'block';
+            return;
+        }
+
+        resultsBox.innerHTML = matches.map(post => `
+            <a href="${escapeHtml(post.href)}" target="_blank" rel="noopener noreferrer" style="display: block; padding: 10px 14px; color: #e6e9f0; text-decoration: none;">
+                <div style="font-weight: 600;">${escapeHtml(post.title)}</div>
+                <div style="font-size: 0.82rem; color: var(--text-dim); word-break: break-all;">${escapeHtml(post.href)}</div>
+            </a>
+        `).join('');
+        resultsBox.style.display = 'block';
+    });
+
+    document.addEventListener('click', (event) => {
+        const resultsBox = document.getElementById('blog-search-results');
+        if (!resultsBox) return;
+        if (!resultsBox.contains(event.target) && event.target.id !== 'blog-search') {
+            resultsBox.style.display = 'none';
+        }
+    });
     
     fetch('blog/posts/index.html')
         .then(response => {
@@ -357,11 +414,22 @@ function showBlog() {
             return response.text();
         })
         .then(html => {
+            currentBlogPosts = extractBlogPosts(html);
             const blogContainer = document.getElementById('blog-container');
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             const bodyContent = doc.body.innerHTML;
-            blogContainer.innerHTML = bodyContent;
+            blogContainer.innerHTML = bodyContent + `
+                <div style="margin-top: 40px; padding: 20px; background: #0d0f18; border-radius: 14px; border: 1px solid #22242f;">
+                    <h3 style="margin-bottom: 10px;">Navegación rápida</h3>
+                    <ul style="padding-left: 20px; display: grid; gap: 8px;">
+                        ${currentBlogPosts.slice(0, 20).map(post => `
+                            <li><a href="${escapeHtml(post.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(post.title)}</a></li>
+                        `).join('')}
+                    </ul>
+                    ${currentBlogPosts.length > 20 ? `<p style="color: var(--text-dim); font-size: 0.85rem;">Mostrando los primeros 20 posts. Usá el buscador para ver el resto.</p>` : ''}
+                </div>
+            `;
             
             blogContainer.querySelectorAll('a').forEach(link => {
                 if (link.hostname && link.hostname !== window.location.hostname) {
@@ -376,6 +444,7 @@ function showBlog() {
         });
     
     document.getElementById('back-to-main').onclick = () => {
+        currentBlogPosts = [];
         faucetDetail.classList.add('hidden');
         hero.classList.remove('hidden');
         faucetList.classList.remove('hidden');
