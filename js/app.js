@@ -166,13 +166,6 @@ function renderList(data) {
             <div class="card-bonus">${escapeHtml(faucet.bonus)}</div>
             ${faucet.comment ? `<div class="card-comment">💬 ${escapeHtml(faucet.comment.substring(0, 100))}${faucet.comment.length > 100 ? '…' : ''}</div>` : ''}
             <p style="color: var(--text-dim); font-size: 0.9rem;">${escapeHtml(String(faucet.summary || '').substring(0, 80))}...</p>
-    
-//          ${(() => {
-//                const slug = String(faucet.id || '').replace(/_/g, '-').trim();
-//                if (!slug) return '';
-//                const href = `/blog/posts/${slug}-reseña.html`;
-//                return `<p style="margin-top:12px;"><a class="card-blog-link" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">📝 Entrada del blog</a></p>`;
-//            })()}
         `;
         card.onclick = () => showDetail(faucet);
         faucetList.appendChild(card);
@@ -264,6 +257,12 @@ function showDetail(faucet) {
                 <div class="card-bonus" style="margin-top: 20px;">
                     <strong>BONUS EXCLUSIVO:</strong> ${escapeHtml(faucet.bonus)}
                 </div>
+                ${(() => {
+                    const slug = String(faucet.id || '').replace(/_/g, '-').trim();
+                    if (!slug) return '';
+                    const href = `/blog/posts/${slug}-reseña.html`;
+                    return `<p style="margin-top:20px;"><a class="card-blog-link" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">📝 Entrada del blog</a></p>`;
+                })()}
                 <a href="${escapeHtml(referral)}" target="_blank" rel="noopener noreferrer" class="cta-btn">¡Regístrate y Gana Ahora!</a>
             </div>
             <div class="screenshot-container">
@@ -653,3 +652,4 @@ function showFormMessage(div, message, type) {
 }
 
 init();
+
